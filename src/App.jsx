@@ -9,6 +9,7 @@ import BlogPage from "./Pages/BlogPage";
 import "./App.css";
 import Navbar from "./Components/Navbar";
 import Services from "./Pages/Services";
+import Footer from "./Components/Footer";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -23,6 +24,7 @@ function App() {
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/blog-page" element={<BlogPage />} />
       </Routes>
+      <Footer/>
     </>
   );
 }
