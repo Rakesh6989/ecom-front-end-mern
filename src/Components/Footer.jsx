@@ -3,62 +3,127 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-gray-200 pt-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Top section */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 border-b border-gray-700 pb-8">
-          
-          {/* About */}
+    <footer className="bg-black text-gray-400 py-12 px-4 md:px-8">
+      <div className="container-box mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
+          {/* Market Place Section */}
           <div>
-            <h3 className="text-xl font-bold mb-4">About Us</h3>
-            <p className="text-gray-400 text-sm">
-              We provide the best products at unbeatable prices. Your
-              satisfaction is our priority!
+            <h3 className="text-white text-xl font-bold mb-4">Market Place</h3>
+            <p className="mb-4 text-sm">
+              Subscribe to our Email alerts to receive early discount offers,
+              and new products info.
             </p>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-xl font-bold mb-4">Quick Links</h3>
-            <ul className="space-y-2 text-gray-400 text-sm">
-              <li><a href="#" className="hover:text-white">Home</a></li>
-              <li><a href="#" className="hover:text-white">Shop</a></li>
-              <li><a href="#" className="hover:text-white">About</a></li>
-              <li><a href="#" className="hover:text-white">Contact</a></li>
-            </ul>
-          </div>
-
-          {/* Customer Service */}
-          <div>
-            <h3 className="text-xl font-bold mb-4">Customer Service</h3>
-            <ul className="space-y-2 text-gray-400 text-sm">
-              <li><a href="#" className="hover:text-white">FAQ</a></li>
-              <li><a href="#" className="hover:text-white">Shipping</a></li>
-              <li><a href="#" className="hover:text-white">Returns</a></li>
-              <li><a href="#" className="hover:text-white">Support</a></li>
-            </ul>
-          </div>
-
-          {/* Contact Info */}
-          <div>
-            <h3 className="text-xl font-bold mb-4">Contact Us</h3>
-            <p className="text-gray-400 text-sm">123 Ecommerce St, Tech City</p>
-            <p className="text-gray-400 text-sm">Email: support@shop.com</p>
-            <p className="text-gray-400 text-sm">Phone: +91 9876543210</p>
-            <div className="flex space-x-4 mt-4">
-              <a href="#" className="hover:text-white">FB</a>
-              <a href="#" className="hover:text-white">IG</a>
-              <a href="#" className="hover:text-white">TW</a>
-              <a href="#" className="hover:text-white">YT</a>
+            <div className="flex flex-col sm:flex-row">
+              <input
+                type="email"
+                placeholder="Email Address*"
+                className="bg-transparent border border-gray-600 text-white px-4 py-2 rounded-md focus:outline-none focus:ring-1 focus:ring-red-600 mb-2 sm:mb-0 sm:mr-2 flex-grow"
+              />
+              <button className="bg-red-600 text-white font-semibold py-2 px-6 rounded-md hover:bg-red-700 transition-colors duration-300">
+                Subscribe
+              </button>
             </div>
           </div>
 
-        </div>
+          {/* Help Section */}
+          <div>
+            <h3 className="text-white text-xl font-bold mb-4">Help</h3>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <a href="#" className="hover:text-white transition-colors">
+                  FAQs
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition-colors">
+                  Track Order
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition-colors">
+                  Cancel Order
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition-colors">
+                  Return Order
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition-colors">
+                  Warranty Info
+                </a>
+              </li>
+            </ul>
+          </div>
 
-        {/* Bottom section */}
-        <div className="mt-8 text-center text-gray-500 text-sm pb-4">
-          &copy; {new Date().getFullYear()} Your E-Commerce Store. All rights reserved.
+          {/* Policies Section */}
+          <div>
+            <h3 className="text-white text-xl font-bold mb-4">Policies</h3>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <a href="#" className="hover:text-white transition-colors">
+                  Return Policy
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition-colors">
+                  Security
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition-colors">
+                  Sitemap
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition-colors">
+                  Privacy Policy
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition-colors">
+                  Terms & Conditions
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Company Section */}
+          <div>
+            <h3 className="text-white text-xl font-bold mb-4">Company</h3>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <a href="#" className="hover:text-white transition-colors">
+                  About Us
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition-colors">
+                  Contact Us
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition-colors">
+                  Service Centres
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition-colors">
+                  Careers
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition-colors">
+                  Affiliates
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
+      </div>
+      <div className="border-t border-gray-800 mt-8 pt-6">
+        {/* You can add a copyright notice or other footer content here */}
       </div>
     </footer>
   );

@@ -16,7 +16,7 @@ function Navbar() {
   return (
     <div
       className={`py-3 ${
-        dark ? "bg-black text-white" : "bg-blue-100 text-black"
+        dark ? "bg-black text-white" : "bg-blue-300 text-black"
       } `}
     >
       <nav className={`container-box  flex justify-between  items-center`}>

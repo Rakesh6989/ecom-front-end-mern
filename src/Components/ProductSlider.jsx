@@ -1,6 +1,6 @@
 import Slider from "react-slick";
 import ProductSliderItem from "./ProductSliderItem";
-import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const ProductSlider = ({ products }) => {
@@ -11,6 +11,7 @@ const ProductSlider = ({ products }) => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
+    arrows: false,
     autoplaySpeed: 2000,
     arrows: true,
     responsive: [
