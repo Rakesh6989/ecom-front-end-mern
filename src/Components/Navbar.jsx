@@ -51,7 +51,7 @@ function Navbar() {
 
           <li
             className="hover:text-gray-200 cursor-pointer"
-            onClick={() => navigate("/about")}
+            onClick={() => navigate("/profile")}
           >
             <Person2Icon />
           </li>

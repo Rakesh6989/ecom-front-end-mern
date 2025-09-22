@@ -1,12 +1,31 @@
     @import "tailwindcss";
 
     .container-box {
-        max-width: 1440px;
-        width: 100%;
-        padding: 0 15px;
-        margin: 0 auto;
+      max-width: 1440px;
+      width: 100%;
+      padding: 0 15px;
+      margin: 0 auto;
     }
-  body{
-    background:#DBEAFE
-;
-  }
+
+    body {
+      background: #DBEAFE;
+    }
+
+    .react-tel-input .form-control {
+      padding-left: 44px !important;
+      background-color: transparent !important;
+      border: none !important;
+     
+    }
+
+    .react-tel-input {
+      border: 1px solid black;
+      border-radius: 5px;
+      padding: 2px;
+      margin-top: 7px;
+      margin-bottom: 0 !important;
+    }
+    .flag-dropdown{
+      background-color: transparent !important;
+      border-right: 1px solid black !important;
+    }

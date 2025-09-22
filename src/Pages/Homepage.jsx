@@ -149,7 +149,7 @@ function HomePage() {
             )}
           </div>
           <button
-            className="float-right cursor-pointer  mt-4 bg-blue-600 text-white text-center py-2 px-4 rounded-lg hover:bg-blue-700 transition"
+            className="float-right text-white cursor-pointer  mt-4 text-center py-2 px-4 rounded-lg bg-red-600 hover:bg-red-700 transition"
             onClick={() => setlimit((prev) => prev + 8)}
           >
             {loading ? "Loading.." : "See More"}

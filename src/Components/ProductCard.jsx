@@ -35,7 +35,7 @@ function ProductCard({ product }) {
         </div>
         <Link
           to={`/product/${product.id}`}
-          className="block mt-4 bg-blue-600 text-white text-center py-2 px-4 rounded-lg hover:bg-blue-700 transition"
+          className="block mt-4 btn-prismary text-white text-center py-2 px-4 rounded-lg bg-red-600 hover:bg-red-700 transition"
         >
           View Details
         </Link>
