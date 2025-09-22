@@ -14,15 +14,20 @@ function HomePage() {
   const [trendingproducts, settrendingproducts] = useState([]);
   const [featuredata, setfeaturedata] = useState([]);
   const [activeTab, setActiveTab] = useState("all");
-
+  const [limit, setlimit] = useState(20);
+  const [loading, setloading] = useState(false);
   useEffect(() => {
+    setloading(true);
     axios
-      .get("http://localhost:5000/products/render")
+      .get(`http://localhost:5000/products/render?limit=${limit}`)
       .then((res) => setdata(res.data))
       .catch((e) => {
         console.log(e);
+      })
+      .finally(() => {
+        setloading(false);
       });
-  }, []);
+  }, [limit]);
   useEffect(() => {
     axios
       .get("http://localhost:5000/products/trending-products")
@@ -129,18 +134,26 @@ function HomePage() {
             </button>
           </div>
         </div>
-        <div
-          className={`${
-            dark ? "bg-black text-white" : "bg-blue-100 text-black"
-          } flex flex-wrap justify-between flex-col md:flex-row  items-center md:items-normal  gap-5 my-20`}
-        >
-          {data && data.length > 0 ? (
-            data.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))
-          ) : (
-            <div className="min-h-screen  mx-auto">No products found</div>
-          )}
+        <div>
+          <div
+            className={`${
+              dark ? "bg-black text-white" : "bg-blue-100 text-black"
+            } flex flex-wrap justify-between flex-col md:flex-row  items-center md:items-normal  gap-5 mt-20`}
+          >
+            {data && data.length > 0 ? (
+              data.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))
+            ) : (
+              <div className="min-h-screen  mx-auto">No products found</div>
+            )}
+          </div>
+          <button
+            className="float-right cursor-pointer  mt-4 bg-blue-600 text-white text-center py-2 px-4 rounded-lg hover:bg-blue-700 transition"
+            onClick={() => setlimit((prev) => prev + 8)}
+          >
+            {loading ? "Loading.." : "See More"}
+          </button>
         </div>
       </div>
       <div className="container-box">
