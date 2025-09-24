@@ -6,6 +6,10 @@ import "react-phone-input-2/lib/style.css";
 import EmailIcon from "@mui/icons-material/Email";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import TinyModal from "../Components/TinyModal";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import axios from "axios";
+
 function SignUp() {
   const [formdata, setformdata] = useState({
     name: "",
@@ -20,6 +24,16 @@ function SignUp() {
     btnText: "Customer",
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const registerschema = Yup.object({
+    name: Yup.string().required("Name Is Required"),
+    phone: Yup.string()
+      .matches(/^[0-9]{10}$/, "Phone must be 10 digits")
+      .required("Phone is required"),
+      email:Yup.string().email("Invalid email").required("Email is Required"),
+      pass:Yup.string().oneOf([])
+  });
+
   const handlechange = (e) => {
     const { name, value } = e.target;
 
