@@ -1,13 +1,16 @@
 import { useContext, useEffect, useState } from "react";
+import axios from "axios";
 import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
 import CreditCardOutlinedIcon from "@mui/icons-material/CreditCardOutlined";
-import axios from "axios";
 import { darkmodeContext } from "../Context/DarkModeContext";
 import ProductCard from "../Components/ProductCard";
 import ProductSlider from "../Components/ProductSlider";
 import FeatureProdSlider from "../Components/FeatureProdSlider";
+import { CardData, carddatatwo } from "../UsefulContents/CardDatas";
+
+import FeaturesSection from "../Components/FeatureCard";
 function HomePage() {
   const { dark } = useContext(darkmodeContext);
   const [data, setdata] = useState([]);
@@ -84,7 +87,7 @@ function HomePage() {
       font-semibold
     `;
   };
-  console.log("f", featuredata);
+
   return (
     <div className="mt-12">
       <h1 className="text-center pb-10 font-bold text-3xl">
@@ -156,54 +159,12 @@ function HomePage() {
           </button>
         </div>
       </div>
-      <div className="container-box">
-        <div className="  text-white py-12 px-4 md:px-8">
-          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-10">
-            Our Advantages
-          </h2>
-          <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Express Delivery */}
-            <div className="flex flex-col items-center text-center">
-              <LocalShippingOutlinedIcon
-                sx={{ color: "#dc2626", fontSize: 40 }}
-                className="mb-4"
-              />
-              <h3 className="text-lg font-semibold mb-1">Express Delivery</h3>
-              <p className="text-gray-400 text-sm">Ships in 24 Hours</p>
-            </div>
-
-            {/* Brand Warranty */}
-            <div className="flex flex-col items-center text-center">
-              <SecurityOutlinedIcon
-                sx={{ color: "#dc2626", fontSize: 40 }}
-                className="mb-4"
-              />
-              <h3 className="text-lg font-semibold mb-1">Brand Warranty</h3>
-              <p className="text-gray-400 text-sm">100% Original products</p>
-            </div>
-
-            {/* Exciting Deals */}
-            <div className="flex flex-col items-center text-center">
-              <LocalOfferOutlinedIcon
-                sx={{ color: "#dc2626", fontSize: 40 }}
-                className="mb-4"
-              />
-              <h3 className="text-lg font-semibold mb-1">Exciting Deals</h3>
-              <p className="text-gray-400 text-sm">On all prepaid orders</p>
-            </div>
-
-            {/* Secure Payments */}
-            <div className="flex flex-col items-center text-center">
-              <CreditCardOutlinedIcon
-                sx={{ color: "#dc2626", fontSize: 40 }}
-                className="mb-4"
-              />
-              <h3 className="text-lg font-semibold mb-1">Secure Payments</h3>
-              <p className="text-gray-400 text-sm">SSL / Secure certificate</p>
-            </div>
-          </div>
-        </div>
+      <div className="mt-20">
+        <p className="text-center font-bold text-3xl pb-10">Why Choose Us</p>
+        <FeaturesSection featuredata={carddatatwo} />
       </div>
+
+      <FeaturesSection featuredata={CardData} />
     </div>
   );
 }

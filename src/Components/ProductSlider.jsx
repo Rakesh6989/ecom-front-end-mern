@@ -13,7 +13,6 @@ const ProductSlider = ({ products }) => {
     autoplay: true,
     arrows: false,
     autoplaySpeed: 2000,
-    arrows: true,
     responsive: [
       {
         breakpoint: 768,
