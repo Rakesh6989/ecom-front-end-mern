@@ -9,7 +9,7 @@ import ProductCard from "../Components/ProductCard";
 import ProductSlider from "../Components/ProductSlider";
 import FeatureProdSlider from "../Components/FeatureProdSlider";
 import { CardData, carddatatwo } from "../UsefulContents/CardDatas";
-
+import { useNavigate } from "react-router-dom";
 import FeaturesSection from "../Components/FeatureCard";
 function HomePage() {
   const { dark } = useContext(darkmodeContext);
@@ -71,6 +71,7 @@ function HomePage() {
         console.log("Unknown tab selected");
     }
   };
+  const navigate = useNavigate();
   const getTabClasses = (tabName) => {
     return `
       cursor-pointer
@@ -87,14 +88,19 @@ function HomePage() {
       font-semibold
     `;
   };
-
+  function handleNext(id) {
+    navigate(`/products/${id}`);
+  }
   return (
     <div className="mt-12">
       <h1 className="text-center pb-10 font-bold text-3xl">
         Latest Laptops | Up to 50% off | Shop now
       </h1>
       <div className="my-20">
-        <ProductSlider products={trendingproducts} />
+        <ProductSlider
+          products={trendingproducts}
+          // onProductClick={handleProductClick}
+        />
       </div>
       <div className="my-20">
         <FeatureProdSlider products={featuredata} />
@@ -145,7 +151,11 @@ function HomePage() {
           >
             {data && data.length > 0 ? (
               data.map((product) => (
-                <ProductCard key={product.id} product={product} />
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  onClick={handleNext}
+                />
               ))
             ) : (
               <div className="min-h-screen  mx-auto">No products found</div>

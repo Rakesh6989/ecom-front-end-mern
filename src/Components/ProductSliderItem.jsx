@@ -1,7 +1,7 @@
 
-const ProductSliderItem = ({ product }) => {
+const ProductSliderItem = ({ product,onClick  }) => {
   return (
-    <div className="flex flex-col md:flex-row items-center justify-between bg-gray-900 text-white p-6 rounded-lg shadow-lg">
+    <div className="flex flex-col md:flex-row items-center justify-between bg-gray-900 text-white p-6 rounded-lg shadow-lg" onClick={onClick }>
       <div className="md:w-1/2 flex flex-col gap-4">
         <h2 className="text-xl md:text-2xl font-bold">{product.name}</h2>
         <div className="flex items-center gap-4">

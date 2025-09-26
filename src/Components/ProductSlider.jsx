@@ -3,7 +3,7 @@ import ProductSliderItem from "./ProductSliderItem";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const ProductSlider = ({ products }) => {
+const ProductSlider = ({ products, onProductClick }) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -27,7 +27,11 @@ const ProductSlider = ({ products }) => {
     <div className="container-box  py-10">
       <Slider {...settings}>
         {products.map((product) => (
-          <ProductSliderItem key={product.id} product={product} />
+          <ProductSliderItem
+            key={product.id}
+            product={product}
+            onClick={() => onProductClick(product.id)}
+          />
         ))}
       </Slider>
     </div>
