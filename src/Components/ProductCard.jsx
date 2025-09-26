@@ -9,7 +9,6 @@ function ProductCard({ product }) {
         className={`max-w-xs mb-10 cursor-pointer shadow-lg rounded-lg overflow-hidden hover:scale-102 border border-[#c0bbbbde] transition-transform duration-200 p-5 ${
           dark ? "bg-black text-white" : "bg-blue-200 text-black"
         }  `}
-        onClick={() => onClick(product.id)}
       >
         <img
           className="w-full h-48 object-cover"

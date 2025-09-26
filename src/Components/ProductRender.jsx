@@ -25,20 +25,14 @@ function ProductRender() {
     fetchData();
   }, [id]);
 
-  if (loading) return <p>Loading Product Details..</p>;
+  if (loading) return <div className="min-h-screen text-center">Loading Product Details..</div>;
   if (!product) return <p>No Product Details Found</p>;
 
   return (
-    <div className="container mx-auto p-6">
-      <div className="flex flex-col md:flex-row gap-6">
-        {/* Left: Images */}
-        <div className="flex flex-col gap-2">
-          <img
-            src={product.images[selectedImage]}
-            alt={product.name}
-            className="w-96 h-96 object-contain border p-2"
-          />
-          <div className="flex gap-2 mt-2">
+    <div className=" mx-auto p-6 mt-15">
+      <div className="flex flex-col md:flex-row gap-6 container-box">
+        <div className="flex  gap-8">
+          <div className="flex flex-col gap-2 mt-2">
             {product.images.map((img, idx) => (
               <img
                 key={idx}
@@ -51,85 +45,106 @@ function ProductRender() {
               />
             ))}
           </div>
+          <div className="flex flex-col items-center">
+            <img
+              src={product.images[selectedImage]}
+              alt={product.name}
+              className="w-96 h-96 object-contain border p-2"
+            />
+
+            <div className="flex  justify-between w-full gap-4 mt-4">
+              <button className="px-6 py-2 w-full bg-orange-500 text-white rounded hover:bg-orange-600 transition">
+                Add to Cart
+              </button>
+              <button className="px-6 py-2 w-full bg-red-600 text-white rounded hover:bg-red-700 transition">
+                Buy Now
+              </button>
+            </div>
+          </div>
         </div>
 
-        {/* Right: Product Details */}
-        <div className="flex-1 flex flex-col gap-4">
-          <h1 className="text-3xl font-bold">{product.name}</h1>
-          <p className="text-gray-500 font-medium">{product.brand}</p>
+      <div className="flex-1 flex flex-col gap-6 ">
+  {/* Product Title & Brand */}
+  <div>
+    <h1 className="text-3xl sm:text-4xl font-bold text-gray-900">{product.name}</h1>
+    <p className="text-gray-500 font-medium text-sm sm:text-base mt-1">{product.brand}</p>
+  </div>
 
-          <div className="flex items-center gap-4">
-            <span className="text-2xl font-bold text-green-700">₹{product.price}</span>
-            <span className="line-through text-gray-400">₹{product.oldPrice}</span>
-            <span className="text-red-600 font-semibold">{product.discount} off</span>
-          </div>
+  {/* Price & Discount */}
+  <div className="flex flex-wrap items-center gap-4 mt-2">
+    <span className="text-2xl sm:text-3xl font-bold text-green-700">₹{product.price}</span>
+    {product.oldPrice && (
+      <span className="line-through text-gray-400 text-sm sm:text-base">₹{product.oldPrice}</span>
+    )}
+    {product.discount && (
+      <span className="text-red-600 font-semibold text-sm sm:text-base">{product.discount} off</span>
+    )}
+  </div>
 
-          {/* Ratings */}
-          <div className="flex items-center gap-2 text-yellow-500 font-semibold">
-            ⭐ {product.ratings.average} ({product.ratings.total} ratings)
-          </div>
+  {/* Ratings */}
+  {product.ratings && (
+    <div className="flex items-center gap-2 text-yellow-500 font-semibold mt-2">
+      ⭐ {product.ratings.average} ({product.ratings.total} ratings)
+    </div>
+  )}
 
-          {/* Offers */}
-          {product.offers?.length > 0 && (
-            <div className="mt-4">
-              <h3 className="font-semibold text-lg">Available Offers:</h3>
-              <ul className="list-disc list-inside">
-                {product.offers.map((offer, idx) => (
-                  <li key={idx} className="text-gray-700">{offer}</li>
-                ))}
-              </ul>
-            </div>
-          )}
+  {/* Offers */}
+  {product.offers?.length > 0 && (
+    <div className="mt-4 bg-gray-50 p-4 rounded-lg">
+      <h3 className="font-semibold text-lg mb-2 text-gray-800">Available Offers:</h3>
+      <ul className="list-disc list-inside space-y-1 text-gray-700">
+        {product.offers.map((offer, idx) => (
+          <li key={idx}>{offer}</li>
+        ))}
+      </ul>
+    </div>
+  )}
 
-          {/* Buttons */}
-          <div className="flex gap-4 mt-4">
-            <button className="px-6 py-2 bg-orange-500 text-white rounded hover:bg-orange-600 transition">
-              Add to Cart
-            </button>
-            <button className="px-6 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition">
-              Buy Now
-            </button>
-          </div>
+  {/* Description */}
+  {product.description && (
+    <div className="mt-6">
+      <h3 className="font-semibold text-xl mb-2 text-gray-900">Description</h3>
+      <p className="text-gray-800 whitespace-pre-line leading-relaxed">{product.description}</p>
+    </div>
+  )}
 
-          {/* Description */}
-          <div className="mt-6">
-            <h3 className="font-semibold text-xl mb-2">Description</h3>
-            <p className="text-gray-800 whitespace-pre-line">{product.description}</p>
-          </div>
+  {/* Specifications */}
+  {product.specifications && (
+    <div className="mt-6 overflow-x-auto">
+      <h3 className="font-semibold text-xl mb-2 text-gray-900">Specifications</h3>
+      <table className="min-w-full border border-gray-300 divide-y divide-gray-200">
+        <tbody>
+          {Object.entries(product.specifications).map(([key, value]) => (
+            <tr key={key} className="hover:bg-gray-50">
+              <td className="px-4 py-2 font-semibold text-gray-700 border-r border-gray-300">{key}</td>
+              <td className="px-4 py-2 text-gray-800">{value}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )}
 
-          {/* Specifications */}
-          {product.specifications && (
-            <div className="mt-6">
-              <h3 className="font-semibold text-xl mb-2">Specifications</h3>
-              <table className="table-auto border-collapse border border-gray-300">
-                <tbody>
-                  {Object.entries(product.specifications).map(([key, value]) => (
-                    <tr key={key} className="border-b border-gray-300">
-                      <td className="border-r px-4 py-2 font-semibold">{key}</td>
-                      <td className="px-4 py-2">{value}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+  {/* Customer Reviews */}
+  {product.testimonials?.length > 0 && (
+    <div className="mt-6">
+      <h3 className="font-semibold text-xl mb-4 text-gray-900">Customer Reviews</h3>
+      <ul className="space-y-4">
+        {product.testimonials.map((t) => (
+          <li
+            key={t._id}
+            className="border p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 bg-white"
+          >
+            <p className="font-semibold text-gray-900">{t.user}</p>
+            <p className="text-gray-700 mt-1">{t.comment}</p>
+            <p className="text-yellow-500 font-semibold mt-1">⭐ {t.rating}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )}
+</div>
 
-          {/* Testimonials */}
-          {product.testimonials?.length > 0 && (
-            <div className="mt-6">
-              <h3 className="font-semibold text-xl mb-2">Customer Reviews</h3>
-              <ul className="space-y-2">
-                {product.testimonials.map((t) => (
-                  <li key={t._id} className="border p-2 rounded">
-                    <p className="font-semibold">{t.user}</p>
-                    <p>{t.comment}</p>
-                    <p className="text-yellow-500">⭐ {t.rating}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
       </div>
     </div>
   );
