@@ -15,11 +15,17 @@ function HomePage() {
   const [activeTab, setActiveTab] = useState("all");
   const [limit, setlimit] = useState(20);
   const [loading, setloading] = useState(false);
+  const [filterdata, setfilterdata] = useState([]);
+
   useEffect(() => {
     setloading(true);
     axios
       .get(`http://localhost:5000/products/render?limit=${limit}`)
-      .then((res) => setdata(res.data))
+      .then((res) => {
+        setfilterdata(res.data);
+        setdata(res.data);
+      })
+
       .catch((e) => {
         console.log(e);
       })
@@ -40,33 +46,18 @@ function HomePage() {
       .then((res) => setfeaturedata(res.data))
       .catch((e) => console.log(e));
   }, []);
+
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);
-    switch (tabName) {
-      case "all":
-        // Logic for 'All' tab
-        console.log("Displaying all products");
-        break;
-      case "headphones":
-        // Logic for 'Headphones' tab
-        console.log("Displaying headphones");
-        break;
-      case "earbuds":
-        // Logic for 'Earbuds' tab
-        console.log("Displaying earbuds");
-        break;
-      case "earphones":
-        // Logic for 'Earphones' tab
-        console.log("Displaying earphones");
-        break;
-      case "neckbands":
-        // Logic for 'Neckbands' tab
-        console.log("Displaying neckbands");
-        break;
-      default:
-        console.log("Unknown tab selected");
+
+    if (tabName === "all") {
+      setdata(filterdata); 
+    } else {
+      const filtered = filterdata.filter((val) => val.brand === tabName);
+      setdata(filtered); 
     }
   };
+
   const navigate = useNavigate();
   const getTabClasses = (tabName) => {
     return `
@@ -76,18 +67,21 @@ function HomePage() {
       ${
         activeTab === tabName
           ? "bg-red-600 text-white rounded-md"
-          : "text-gray-400 hover:text-white"
+          : "text-gray-400 hover:text-black hover:bg-red-600 rounded-md hover:text-white"
       }
       px-4 py-2
       sm:px-6 sm:py-3
-      text-sm sm:text-base
-      font-semibold
+      text-lg
+      font-semibold text-gray-800
     `;
   };
   function handleNext(id) {
     console.log("id", id);
     window.open(`/products/${id}`, "_blank");
   }
+
+  // console.log("activeTab", activeTab);
+
   return (
     <div className="mt-12">
       <h1 className="text-center pb-10 font-bold text-3xl">
@@ -103,9 +97,9 @@ function HomePage() {
         <FeatureProdSlider products={featuredata} />
       </div>
       <div className="container-box">
-        <div className="bg-blue-100  text-white py-15 px-4 md:px-8 lg:px-16">
+        <div className="bg-blue-100  text-black  px-4 md:px-8 lg:px-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8">
-            Top Products
+            Top Brands
           </h2>
           <div className="flex flex-wrap justify-center gap-2 sm:gap-4 md:gap-6">
             <button
@@ -115,28 +109,34 @@ function HomePage() {
               All
             </button>
             <button
-              className={getTabClasses("headphones")}
-              onClick={() => handleTabClick("headphones")}
+              className={getTabClasses("HP")}
+              onClick={() => handleTabClick("HP")}
             >
-              Headphones
+              HP
             </button>
             <button
-              className={getTabClasses("earbuds")}
-              onClick={() => handleTabClick("earbuds")}
+              className={getTabClasses("Lenovo")}
+              onClick={() => handleTabClick("Lenovo")}
             >
-              Earbuds
+              Lenovo
             </button>
             <button
-              className={getTabClasses("earphones")}
-              onClick={() => handleTabClick("earphones")}
+              className={getTabClasses("Acer")}
+              onClick={() => handleTabClick("Acer")}
             >
-              Earphones
+              Acer
             </button>
             <button
-              className={getTabClasses("neckbands")}
-              onClick={() => handleTabClick("neckbands")}
+              className={getTabClasses("Apple")}
+              onClick={() => handleTabClick("Apple")}
             >
-              Neckbands
+              Apple
+            </button>
+            <button
+              className={getTabClasses("Dell")}
+              onClick={() => handleTabClick("Dell")}
+            >
+              Dell
             </button>
           </div>
         </div>
