@@ -2,15 +2,20 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { User } from "lucide-react";
+import AdCardSlider from "./AdCardSlider";
+import SimilarProdCard from "./SimilarProdCard";
 function ProductRender() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState({
+    mainproduct: true,
+    optproduct: true,
+  });
   const [selectedImage, setSelectedImage] = useState(0);
   const [expand, setexpand] = useState(false);
+  const [optionaldata, setoptionaldata] = useState([]);
   useEffect(() => {
     if (!id) return;
-
     const fetchData = async () => {
       try {
         const res = await axios.get(`http://localhost:5000/products/${id}`);
@@ -18,24 +23,47 @@ function ProductRender() {
       } catch (error) {
         console.error("Failed to fetch product", error);
       } finally {
-        setLoading(false);
+        setLoading((prev) => ({
+          ...prev,
+          mainproduct: false,
+        }));
       }
     };
 
     fetchData();
   }, [id]);
+
+  useEffect(() => {
+    const fetchOptdata = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/products/render?limit=${4}`
+        );
+        setoptionaldata(response.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading((prev) => ({
+          ...prev,
+          optproduct: false,
+        }));
+      }
+    };
+    fetchOptdata();
+  }, []);
+  console.log(optionaldata);
   const maxlength = 300;
   const islong = product && product.description?.length > maxlength;
   const preview = product && product.description?.slice(0, maxlength);
-  if (loading)
+  if (loading.mainproduct)
     return (
       <div className="min-h-screen text-center">Loading Product Details..</div>
     );
   if (!product) return <p>No Product Details Found</p>;
 
   return (
-    <div className=" mx-auto p-6 mt-15">
-      <div className="flex flex-col md:flex-row gap-6 container-box">
+    <div className="  container-box">
+      <div className="flex flex-col md:flex-row gap-6 mt-20">
         <div className="flex  gap-8">
           <div className="flex flex-col gap-2 mt-2">
             {product.images.map((img, idx) => (
@@ -194,6 +222,11 @@ function ProductRender() {
           )}
         </div>
       </div>
+      <p className="text-xl font-bold text-gray-800">
+        You might be interested in
+      </p>
+      <AdCardSlider products={optionaldata} />
+      <SimilarProdCard />
     </div>
   );
 }
