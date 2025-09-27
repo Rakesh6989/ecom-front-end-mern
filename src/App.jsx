@@ -11,10 +11,12 @@ import Footer from "./Components/Footer";
 import Profile from "./Pages/Profile";
 import SignUp from "./Pages/SignUp";
 import ProductRender from "./Components/ProductRender";
+import ScrollToTop from "./Components/ScrollToTop";
 function App() {
   return (
     <>
       <Navbar />
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/Services" element={<Services />} />
@@ -23,7 +25,7 @@ function App() {
         <Route path="/blog-page" element={<BlogPage />} />
         <Route path="/Profile" element={<Profile />} />
         <Route path="/Profile/sign-up" element={<SignUp />} />
-        <Route path="/products/:id" element={<ProductRender/>} />
+        <Route path="/products/:id" element={<ProductRender />} />
       </Routes>
       <Footer />
     </>

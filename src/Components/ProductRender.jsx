@@ -6,7 +6,7 @@ function ProductRender() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [selectedImage, setSelectedImage] = useState(0); // Image gallery
+  const [selectedImage, setSelectedImage] = useState(0); 
 
   useEffect(() => {
     if (!id) return;
@@ -64,13 +64,11 @@ function ProductRender() {
         </div>
 
       <div className="flex-1 flex flex-col gap-6 ">
-  {/* Product Title & Brand */}
   <div>
     <h1 className="text-3xl sm:text-4xl font-bold text-gray-900">{product.name}</h1>
     <p className="text-gray-500 font-medium text-sm sm:text-base mt-1">{product.brand}</p>
   </div>
 
-  {/* Price & Discount */}
   <div className="flex flex-wrap items-center gap-4 mt-2">
     <span className="text-2xl sm:text-3xl font-bold text-green-700">₹{product.price}</span>
     {product.oldPrice && (
@@ -81,14 +79,12 @@ function ProductRender() {
     )}
   </div>
 
-  {/* Ratings */}
   {product.ratings && (
     <div className="flex items-center gap-2 text-yellow-500 font-semibold mt-2">
       ⭐ {product.ratings.average} ({product.ratings.total} ratings)
     </div>
   )}
 
-  {/* Offers */}
   {product.offers?.length > 0 && (
     <div className="mt-4 bg-gray-50 p-4 rounded-lg">
       <h3 className="font-semibold text-lg mb-2 text-gray-800">Available Offers:</h3>
@@ -100,7 +96,6 @@ function ProductRender() {
     </div>
   )}
 
-  {/* Description */}
   {product.description && (
     <div className="mt-6">
       <h3 className="font-semibold text-xl mb-2 text-gray-900">Description</h3>
@@ -108,7 +103,6 @@ function ProductRender() {
     </div>
   )}
 
-  {/* Specifications */}
   {product.specifications && (
     <div className="mt-6 overflow-x-auto">
       <h3 className="font-semibold text-xl mb-2 text-gray-900">Specifications</h3>
@@ -125,7 +119,6 @@ function ProductRender() {
     </div>
   )}
 
-  {/* Customer Reviews */}
   {product.testimonials?.length > 0 && (
     <div className="mt-6">
       <h3 className="font-semibold text-xl mb-4 text-gray-900">Customer Reviews</h3>
