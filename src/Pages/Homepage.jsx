@@ -1,9 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
-import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
-import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
-import CreditCardOutlinedIcon from "@mui/icons-material/CreditCardOutlined";
 import { darkmodeContext } from "../Context/DarkModeContext";
 import ProductCard from "../Components/ProductCard";
 import ProductSlider from "../Components/ProductSlider";
@@ -89,7 +85,8 @@ function HomePage() {
     `;
   };
   function handleNext(id) {
-    navigate(`/products/${id}`);
+    console.log("id", id);
+    window.open(`/products/${id}`, "_blank");
   }
   return (
     <div className="mt-12">
@@ -99,7 +96,7 @@ function HomePage() {
       <div className="my-20">
         <ProductSlider
           products={trendingproducts}
-          // onProductClick={handleProductClick}
+          onProductClick={handleNext}
         />
       </div>
       <div className="my-20">
@@ -154,7 +151,7 @@ function HomePage() {
                 <ProductCard
                   key={product.id}
                   product={product}
-                  onClick={handleNext}
+                  onProductClick={handleNext}
                 />
               ))
             ) : (

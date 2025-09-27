@@ -1,9 +1,9 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { User } from "lucide-react";
 import AdCardSlider from "./AdCardSlider";
-import SimilarProdCard from "./SimilarProdCard";
+import SimilarProdSlider from "./SimilarProdSlider";
 function ProductRender() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
@@ -14,6 +14,7 @@ function ProductRender() {
   const [selectedImage, setSelectedImage] = useState(0);
   const [expand, setexpand] = useState(false);
   const [optionaldata, setoptionaldata] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
     if (!id) return;
     const fetchData = async () => {
@@ -60,7 +61,9 @@ function ProductRender() {
       <div className="min-h-screen text-center">Loading Product Details..</div>
     );
   if (!product) return <p>No Product Details Found</p>;
-
+  const handlenext = (id) => {
+    window.open(`/products/${id}`, "C");
+  };
   return (
     <div className="  container-box">
       <div className="flex flex-col md:flex-row gap-6 mt-20">
@@ -222,11 +225,10 @@ function ProductRender() {
           )}
         </div>
       </div>
-      <p className="text-xl font-bold text-gray-800">
-        You might be interested in
-      </p>
+      <p className="text-xl font-bold text-gray-800">You might be interested</p>
       <AdCardSlider products={optionaldata} />
-      <SimilarProdCard />
+      <p className="text-xl font-bold text-gray-800">Similar Products</p>
+      <SimilarProdSlider products={optionaldata} onProductClick={handlenext} />
     </div>
   );
 }
