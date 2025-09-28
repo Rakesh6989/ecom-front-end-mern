@@ -7,32 +7,43 @@ import FeatureProdSlider from "../Components/FeatureProdSlider";
 import { CardData, carddatatwo } from "../UsefulContents/CardDatas";
 import { useNavigate } from "react-router-dom";
 import FeaturesSection from "../Components/FeatureCard";
+import WhyChooseUs from "../Components/WhyChoose";
 function HomePage() {
   const { dark } = useContext(darkmodeContext);
-  const [data, setdata] = useState([]);
   const [trendingproducts, settrendingproducts] = useState([]);
   const [featuredata, setfeaturedata] = useState([]);
-  const [activeTab, setActiveTab] = useState("all");
   const [limit, setlimit] = useState(20);
   const [loading, setloading] = useState(false);
   const [filterdata, setfilterdata] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
+  const [activeTab, setActiveTab] = useState("all");
+  const [data, setdata] = useState([]);
 
   useEffect(() => {
     setloading(true);
     axios
       .get(`http://localhost:5000/products/render?limit=${limit}`)
       .then((res) => {
-        setfilterdata(res.data);
-        setdata(res.data);
-      })
+        setAllProducts(res.data);
 
-      .catch((e) => {
-        console.log(e);
+        if (activeTab === "all") {
+          setdata(res.data);
+        } else {
+          setdata(res.data.filter((val) => val.brand === activeTab));
+        }
       })
-      .finally(() => {
-        setloading(false);
-      });
+      .catch((e) => console.log(e))
+      .finally(() => setloading(false));
   }, [limit]);
+
+  useEffect(() => {
+    if (activeTab === "all") {
+      setdata(allProducts);
+    } else {
+      setdata(allProducts.filter((val) => val.brand === activeTab));
+    }
+  }, [activeTab, allProducts]);
+
   useEffect(() => {
     axios
       .get("http://localhost:5000/products/trending-products")
@@ -51,10 +62,10 @@ function HomePage() {
     setActiveTab(tabName);
 
     if (tabName === "all") {
-      setdata(filterdata); 
+      setdata(filterdata);
     } else {
       const filtered = filterdata.filter((val) => val.brand === tabName);
-      setdata(filtered); 
+      setdata(filtered);
     }
   };
 
@@ -167,6 +178,7 @@ function HomePage() {
         </div>
       </div>
       <div className="mt-20">
+        <WhyChooseUs/>
         <p className="text-center font-bold text-3xl pb-10">Why Choose Us</p>
         <FeaturesSection featuredata={carddatatwo} />
       </div>
