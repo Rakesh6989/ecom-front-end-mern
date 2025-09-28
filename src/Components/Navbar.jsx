@@ -9,79 +9,206 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Person2Icon from "@mui/icons-material/Person2";
 import SearchIcon from "@mui/icons-material/Search";
+
 function Navbar() {
   const { dark, setdark } = useContext(darkmodeContext);
   const [isOpen, setIsOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      console.log("Searching for:", searchQuery);
+      // Add your search logic here
+      // navigate(`/search?q=${searchQuery}`);
+    }
+  };
+
   return (
     <div
-      className={`py-3 z-100 fixed w-full border-b border-b-gray-600 ${
+      className={`p-5 z-50 fixed w-full border-b border-b-gray-600 ${
         dark ? "bg-black text-white" : "bg-blue-300 text-black"
-      } `}
+      }`}
     >
-      <nav className={`container-box  flex justify-between  items-center`}>
-        <div
-          className="text-xl font-bold cursor-pointer"
-          onClick={() => navigate("/")}
-        >
-          <img
-            src="https://cdn.pixabay.com/photo/2013/07/12/19/05/notebook-154358_1280.png"
-            className="h-12"
-          />
-          <h1 className="text-sm">LapTopiya</h1>
-        </div>
-        <div className="relative  max-w-3xl w-2xl">
-          <SearchIcon className="absolute top-2 right-2" />
-          <input
-            type="text"
-            placeholder="Search for Laptop,Brand and More.."
-            className="border p-2 w-full pl-10 rounded-lg"
-          />
-        </div>
-        <ul className="hidden md:flex md:gap-5 space-x-6">
-          <li
-            className="hover:text-gray-200 cursor-pointer"
-            onClick={() => setdark(!dark)}
+      <nav className="container mx-auto px-4">
+        <div className="flex justify-between items-center">
+          <div
+            className="flex items-center gap-2 cursor-pointer"
+            onClick={() => navigate("/")}
           >
-            {dark ? <LightModeIcon /> : <DarkModeIcon />}
-          </li>
+            <img
+              src="https://cdn.pixabay.com/photo/2013/07/12/19/05/notebook-154358_1280.png"
+              className="h-10 w-10"
+              alt="LapTopiya Logo"
+            />
+            <h1 className="text-lg font-bold">LapTopiya</h1>
+          </div>
+          <div className="hidden md:flex relative">
+            <form onSubmit={handleSearch} className="relative max-w-md ">
+              <SearchIcon className="absolute top-2.5 right-3 text-gray-500" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search for Laptop, Brand and More.."
+                className={`border p-2 pl-4 pr-4 rounded-lg w-80 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  dark
+                    ? "bg-gray-800 border-gray-600 text-white placeholder-gray-400"
+                    : "bg-blue-200 border-gray-300 text-black placeholder-gray-800"
+                }`}
+              />
+            </form>
 
-          {/* <li className="hover:text-gray-200 cursor-pointer">
-            <SearchIcon />
-          </li> */}
-          <li
-            className="hover:text-gray-200 cursor-pointer"
-            onClick={() => navigate("/about")}
+            {searchQuery && (
+              <>
+                <div className="bg-blue-300 absolute w-full top-[60px]">
+                  {searchQuery}
+                </div>
+              </>
+            )}
+          </div>
+          <div className="hidden md:flex items-center gap-6">
+            <div className="flex items-center gap-4">
+              <button
+                className="hover:text-gray-600 cursor-pointer p-2"
+                onClick={() => setdark(!dark)}
+                aria-label="Toggle dark mode"
+              >
+                {dark ? <LightModeIcon /> : <DarkModeIcon />}
+              </button>
+
+              <button
+                className="hover:text-gray-600 cursor-pointer p-2"
+                onClick={() => navigate("/cart")}
+                aria-label="Shopping cart"
+              >
+                <ShoppingCartIcon />
+              </button>
+
+              <button
+                className="hover:text-gray-600 cursor-pointer p-2"
+                onClick={() => navigate("/profile")}
+                aria-label="User profile"
+              >
+                <Person2Icon />
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile Menu Toggle */}
+          <div
+            className="md:hidden cursor-pointer p-2"
+            onClick={() => setIsOpen(!isOpen)}
           >
-            <ShoppingCartIcon />
-          </li>
-
-          <li
-            className="hover:text-gray-200 cursor-pointer"
-            onClick={() => navigate("/profile")}
-          >
-            <Person2Icon />
-          </li>
-        </ul>
-
-        <div
-          className="md:hidden cursor-pointer"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? (
-            <CloseIcon fontSize="large" />
-          ) : (
-            <MenuIcon fontSize="large" />
-          )}
+            {isOpen ? (
+              <CloseIcon fontSize="large" />
+            ) : (
+              <MenuIcon fontSize="large" />
+            )}
+          </div>
         </div>
 
+        {/* Mobile Search - Always visible on mobile */}
+        <div className="md:hidden mt-3">
+          <form onSubmit={handleSearch} className="relative">
+            <SearchIcon className="absolute top-2.5 left-3 text-gray-500" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search for Laptop, Brand and More.."
+              className={`border p-2 pl-10 pr-4 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                dark
+                  ? "bg-gray-800 border-gray-600 text-white placeholder-gray-400"
+                  : "bg-white border-gray-300 text-black placeholder-gray-500"
+              }`}
+            />
+          </form>
+        </div>
+
+        {/* Mobile Menu */}
         {isOpen && (
-          <ul className="absolute top-16 left-0 w-full bg-blue-600 flex flex-col items-center space-y-3 py-4 md:hidden">
-            <li className="hover:text-gray-200 cursor-pointer">Home</li>
-            <li className="hover:text-gray-200 cursor-pointer">About</li>
-            <li className="hover:text-gray-200 cursor-pointer">Services</li>
-            <li className="hover:text-gray-200 cursor-pointer">Contact</li>
-          </ul>
+          <div className="md:hidden">
+            <ul
+              className={`mt-4 flex flex-col space-y-3 py-4 px-2 rounded-lg ${
+                dark ? "bg-gray-800" : "bg-blue-400"
+              }`}
+            >
+              <li
+                className="hover:text-gray-300 cursor-pointer p-2 rounded"
+                onClick={() => {
+                  navigate("/");
+                  setIsOpen(false);
+                }}
+              >
+                Home
+              </li>
+              <li
+                className="hover:text-gray-300 cursor-pointer p-2 rounded"
+                onClick={() => {
+                  navigate("/about");
+                  setIsOpen(false);
+                }}
+              >
+                About
+              </li>
+              <li
+                className="hover:text-gray-300 cursor-pointer p-2 rounded"
+                onClick={() => {
+                  navigate("/services");
+                  setIsOpen(false);
+                }}
+              >
+                Services
+              </li>
+              <li
+                className="hover:text-gray-300 cursor-pointer p-2 rounded"
+                onClick={() => {
+                  navigate("/contact");
+                  setIsOpen(false);
+                }}
+              >
+                Contact
+              </li>
+
+              {/* Mobile Icons Row */}
+              <li className="flex justify-around pt-4 border-t border-gray-500">
+                <button
+                  className="hover:text-gray-300 cursor-pointer p-2"
+                  onClick={() => {
+                    setdark(!dark);
+                    setIsOpen(false);
+                  }}
+                  aria-label="Toggle dark mode"
+                >
+                  {dark ? <LightModeIcon /> : <DarkModeIcon />}
+                </button>
+
+                <button
+                  className="hover:text-gray-300 cursor-pointer p-2"
+                  onClick={() => {
+                    navigate("/cart");
+                    setIsOpen(false);
+                  }}
+                  aria-label="Shopping cart"
+                >
+                  <ShoppingCartIcon />
+                </button>
+
+                <button
+                  className="hover:text-gray-300 cursor-pointer p-2"
+                  onClick={() => {
+                    navigate("/profile");
+                    setIsOpen(false);
+                  }}
+                  aria-label="User profile"
+                >
+                  <Person2Icon />
+                </button>
+              </li>
+            </ul>
+          </div>
         )}
       </nav>
     </div>

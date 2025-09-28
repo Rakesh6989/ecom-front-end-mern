@@ -66,7 +66,7 @@ function ProductRender() {
   };
   return (
     <div className="  container-box">
-      <div className="flex flex-col md:flex-row gap-6 mt-20">
+      <div className="flex flex-col md:flex-row gap-6 pt-[150px]">
         <div className="flex  gap-8">
           <div className="flex flex-col gap-2 mt-2">
             {product.images.map((img, idx) => (
