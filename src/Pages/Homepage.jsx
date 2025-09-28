@@ -178,7 +178,7 @@ function HomePage() {
         </div>
       </div>
       <div className="mt-20">
-        <WhyChooseUs/>
+        {/* <WhyChooseUs/> */}
         <p className="text-center font-bold text-3xl pb-10">Why Choose Us</p>
         <FeaturesSection featuredata={carddatatwo} />
       </div>
