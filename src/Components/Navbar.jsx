@@ -6,16 +6,16 @@ import { useContext } from "react";
 import { darkmodeContext } from "../Context/DarkModeContext";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
-import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Person2Icon from "@mui/icons-material/Person2";
+import SearchIcon from "@mui/icons-material/Search";
 function Navbar() {
   const { dark, setdark } = useContext(darkmodeContext);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   return (
     <div
-      className={`py-3 ${
+      className={`py-3 z-100 fixed w-full border-b border-b-gray-600 ${
         dark ? "bg-black text-white" : "bg-blue-300 text-black"
       } `}
     >
@@ -30,7 +30,14 @@ function Navbar() {
           />
           <h1 className="text-sm">LapTopiya</h1>
         </div>
-
+        <div className="relative  max-w-3xl w-2xl">
+          <SearchIcon className="absolute top-2 right-2" />
+          <input
+            type="text"
+            placeholder="Search for Laptop,Brand and More.."
+            className="border p-2 w-full pl-10 rounded-lg"
+          />
+        </div>
         <ul className="hidden md:flex md:gap-5 space-x-6">
           <li
             className="hover:text-gray-200 cursor-pointer"
@@ -39,9 +46,9 @@ function Navbar() {
             {dark ? <LightModeIcon /> : <DarkModeIcon />}
           </li>
 
-          <li className="hover:text-gray-200 cursor-pointer">
+          {/* <li className="hover:text-gray-200 cursor-pointer">
             <SearchIcon />
-          </li>
+          </li> */}
           <li
             className="hover:text-gray-200 cursor-pointer"
             onClick={() => navigate("/about")}

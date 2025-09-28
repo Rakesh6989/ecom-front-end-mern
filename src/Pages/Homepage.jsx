@@ -122,7 +122,7 @@ function HomePage() {
   // console.log("activeTab", activeTab);
 
   return (
-    <div className="mt-12">
+    <div className="pt-[150px]">
       <h1 className="text-center pb-10 font-bold text-3xl">
         Latest Laptops | Up to 50% off | Shop now
       </h1>
