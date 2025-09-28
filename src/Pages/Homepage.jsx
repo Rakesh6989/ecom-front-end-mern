@@ -180,30 +180,75 @@ function HomePage() {
           </div>
         </div> */}
 
-        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8">
-          Select Top Brands
-        </h2>
-        <div className="flex justify-between items-center">
-          {brands &&
-            brands.map((val, ind) => {
-              return (
-                <div
-                  key={ind}
-                  className="cursor-pointer flex flex-col items-center gap-1.5 h-[100px] hover:border-b-amber-500 hover:border-b-5 border-transparent "
-                  onClick={() => handleTabClick(val.name)}
-                >
-                  <img src={val.logo} className="max-w-[80px] max-h-[50px]" />
-                  <p>{val.name}</p>
+        <div className="my-12 container-box ">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-10">
+            Select Top Brands
+          </h2>
+
+          <div className="flex flex-wrap justify-between items-center gap-6">
+            <div
+              onClick={() => handleTabClick("all")}
+              className={`cursor-pointer flex flex-col items-center gap-2 h-[110px] w-[100px] rounded-lg border-2 transition-all duration-300 
+            ${
+              activeTab === "all"
+                ? "border-gray-800 bg-blue-300"
+                : "border-transparent hover:border-gray-800"
+            }`}
+            >
+              <div className="flex items-center justify-center w-full h-[60px]">
+                <img
+                  src="https://cdn.pixabay.com/photo/2013/07/12/19/05/notebook-154358_1280.png"
+                  className={`${
+                    activeTab === "all" ? "text-red-600" : "border-gray-800"
+                  } w-10 h-10`}
+                />
+              </div>
+              <p
+                className={`text-sm font-semibold ${
+                  activeTab === "all" ? "text-white" : "text-gray-700"
+                }`}
+              >
+                All
+              </p>
+            </div>
+
+            {brands.map((val, ind) => (
+              <div
+                key={ind}
+                onClick={() => handleTabClick(val.name)}
+                className={`cursor-pointer flex flex-col items-center gap-2 h-[110px] w-[100px] rounded-lg border-2 transition-all duration-300
+              ${
+                activeTab === val.name
+                  ? "border-gray-800 bg-blue-50"
+                  : "border-transparent hover:border-gray-600"
+              }`}
+              >
+                <div className="flex items-center justify-center w-full h-[60px]">
+                  <img
+                    src={val.logo}
+                    alt={val.name}
+                    className="max-w-[70px] max-h-[50px] object-contain"
+                  />
                 </div>
-              );
-            })}
+                <p
+                  className={`text-sm font-semibold flex  ${
+                    activeTab === val.name
+                      ? "text-white bg-red-700 px-3 py-0.5 rounded-xl"
+                      : "text-gray-700"
+                  }`}
+                >
+                  {val.name}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div>
           <div
             className={`${
               dark ? "bg-black text-white" : "bg-blue-100 text-black"
-            } flex flex-wrap justify-start flex-col md:flex-row  items-center md:items-normal  gap-10 mt-20`}
+            } flex flex-wrap justify-between flex-col md:flex-row  items-center md:items-normal  gap-10 mt-20`}
           >
             {data && data.length > 0 ? (
               data.map((product) => (
