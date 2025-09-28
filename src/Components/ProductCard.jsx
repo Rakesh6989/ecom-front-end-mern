@@ -56,12 +56,12 @@ function ProductCard({ product, onProductClick }) {
         <div className="flex gap-2.5 items-center mt-5">
           <button
             className="  btn-prismary text-white text-center py-3 px-4  w-[80%]
-            rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:bg-red-700 transition flex  justify-center gap-2 "
+            rounded-lg bg-red-700 transition flex cursor-pointer justify-center gap-2 "
           >
             <ShoppingCart size={22} />
-            <span className="font-semibold"> Add To Cart</span>
+            <span className="font-semibold "> Add To Cart</span>
           </button>
-          <button className="border-2 p-2 rounded-lg border-[#62606095]">
+          <button className="border-2 p-2 cursor-pointer rounded-lg border-[#62606095]">
             <ArrowRight style={{ color: "gray" }} size={20} />
           </button>
         </div>

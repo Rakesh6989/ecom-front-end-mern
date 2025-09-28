@@ -8,6 +8,7 @@ import { CardData, carddatatwo } from "../UsefulContents/CardDatas";
 import { useNavigate } from "react-router-dom";
 import FeaturesSection from "../Components/FeatureCard";
 import WhyChooseUs from "../Components/WhyChoose";
+import { Laptop } from "lucide-react";
 function HomePage() {
   const { dark } = useContext(darkmodeContext);
   const [trendingproducts, settrendingproducts] = useState([]);
@@ -18,6 +19,33 @@ function HomePage() {
   const [allProducts, setAllProducts] = useState([]);
   const [activeTab, setActiveTab] = useState("all");
   const [data, setdata] = useState([]);
+
+  const brands = [
+    {
+      name: "Dell",
+      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Dell_Logo.svg/450px-Dell_Logo.svg.png",
+    },
+    {
+      name: "HP",
+      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/HP_logo_2012.svg/1024px-HP_logo_2012.svg.png",
+    },
+    {
+      name: "Apple",
+      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/833px-Apple_logo_black.svg.png",
+    },
+    {
+      name: "Acer",
+      logo: "https://1000logos.net/wp-content/uploads/2016/09/Acer-Logo-640x400.png",
+    },
+    {
+      name: "Lenovo",
+      logo: "https://logos-world.net/wp-content/uploads/2022/07/Lenovo-Logo-700x394.png",
+    },
+    {
+      name: "ASUS",
+      logo: "https://images.seeklogo.com/logo-png/1/1/asus-logo-png_seeklogo-12597.png",
+    },
+  ];
 
   useEffect(() => {
     setloading(true);
@@ -108,7 +136,7 @@ function HomePage() {
         <FeatureProdSlider products={featuredata} />
       </div>
       <div className="container-box">
-        <div className="bg-blue-100  text-black  px-4 md:px-8 lg:px-16">
+        {/* <div className="bg-blue-100  text-black  px-4 md:px-8 lg:px-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8">
             Top Brands
           </h2>
@@ -150,12 +178,32 @@ function HomePage() {
               Dell
             </button>
           </div>
+        </div> */}
+
+        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8">
+          Select Top Brands
+        </h2>
+        <div className="flex justify-between items-center">
+          {brands &&
+            brands.map((val, ind) => {
+              return (
+                <div
+                  key={ind}
+                  className="cursor-pointer flex flex-col items-center gap-1.5 h-[100px] hover:border-b-amber-500 hover:border-b-5 border-transparent "
+                  onClick={() => handleTabClick(val.name)}
+                >
+                  <img src={val.logo} className="max-w-[80px] max-h-[50px]" />
+                  <p>{val.name}</p>
+                </div>
+              );
+            })}
         </div>
+
         <div>
           <div
             className={`${
               dark ? "bg-black text-white" : "bg-blue-100 text-black"
-            } flex flex-wrap justify-between flex-col md:flex-row  items-center md:items-normal  gap-5 mt-20`}
+            } flex flex-wrap justify-start flex-col md:flex-row  items-center md:items-normal  gap-10 mt-20`}
           >
             {data && data.length > 0 ? (
               data.map((product) => (
@@ -178,12 +226,8 @@ function HomePage() {
         </div>
       </div>
       <div className="mt-20">
-        {/* <WhyChooseUs/> */}
-        <p className="text-center font-bold text-3xl pb-10">Why Choose Us</p>
-        <FeaturesSection featuredata={carddatatwo} />
+        <WhyChooseUs />
       </div>
-
-      <FeaturesSection featuredata={CardData} />
     </div>
   );
 }
