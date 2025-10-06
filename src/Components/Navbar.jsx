@@ -27,8 +27,8 @@ function Navbar() {
 
   return (
     <div
-      className={`p-5 z-50 fixed w-full border-b border-b-gray-600 ${
-        dark ? "bg-black text-white" : "bg-blue-300 text-black"
+      className={`p-5 z-50 fixed w-full ${
+        dark ? "bg-black text-white" : "bg-[#2874f0] text-black"
       }`}
     >
       <nav className="container mx-auto px-4">
@@ -45,7 +45,7 @@ function Navbar() {
             <h1 className="text-lg font-bold">LapTopiya</h1>
           </div>
           <div className="hidden md:flex relative">
-            <form onSubmit={handleSearch} className="relative max-w-md ">
+            <form onSubmit={handleSearch} className="relative  max-w-lg ">
               <SearchIcon className="absolute top-2.5 right-3 text-gray-500" />
               <input
                 type="text"
@@ -55,7 +55,7 @@ function Navbar() {
                 className={`border p-2 pl-4 pr-4 rounded-lg w-80 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                   dark
                     ? "bg-gray-800 border-gray-600 text-white placeholder-gray-400"
-                    : "bg-blue-200 border-gray-300 text-black placeholder-gray-800"
+                    : "bg-white border-gray-300 text-black placeholder-gray-800"
                 }`}
               />
             </form>

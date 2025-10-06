@@ -8,14 +8,14 @@
     }
 
     body {
-      background: #DBEAFE;
+      background: #f1f3f6;
     }
 
     .react-tel-input .form-control {
       padding-left: 44px !important;
       background-color: transparent !important;
       border: none !important;
-     
+
     }
 
     .react-tel-input {
@@ -25,10 +25,12 @@
       margin-top: 7px;
       margin-bottom: 0 !important;
     }
-    .flag-dropdown{
+
+    .flag-dropdown {
       background-color: transparent !important;
       border-right: 1px solid black !important;
     }
-    *{
+
+    * {
       box-sizing: border-box;
     }

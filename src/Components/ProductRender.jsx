@@ -251,7 +251,6 @@ function ProductRender() {
               </div>
             )}
 
-            {/* Description */}
             {product.description && (
               <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
                 <h3 className="font-bold text-xl text-gray-900 mb-3">

@@ -12,11 +12,13 @@ import Profile from "./Pages/Profile";
 import SignUp from "./Pages/SignUp";
 import ProductRender from "./Components/ProductRender";
 import ScrollToTop from "./Components/ScrollToTop";
+import ScrollToTopButton from "./Components/ScrollToTopButton";
 function App() {
   return (
     <>
       <Navbar />
       <ScrollToTop />
+      <ScrollToTopButton />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/Services" element={<Services />} />
@@ -27,6 +29,7 @@ function App() {
         <Route path="/Profile/sign-up" element={<SignUp />} />
         <Route path="/products/:id" element={<ProductRender />} />
       </Routes>
+
       <Footer />
     </>
   );

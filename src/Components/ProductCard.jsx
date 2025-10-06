@@ -1,13 +1,40 @@
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { darkmodeContext } from "../Context/DarkModeContext";
 import { ShoppingCart, Truck, ArrowRight, Zap } from "lucide-react";
 function ProductCard({ product, onProductClick }) {
   const { dark } = useContext(darkmodeContext);
+  const [cartsendData, setcartsendData] = useState({
+    brand: "",
+    productName: "",
+    productImage: "",
+    oldPrice: "",
+    currentPrice: "",
+    _id: "",
+    discount: "",
+    quantity: "",
+  });
+
+  const cartFN = (clickedProd) => {
+    setcartsendData((prev) => ({
+      ...prev,
+      brand: clickedProd.brand,
+      productName: clickedProd.name,
+      productImage: clickedProd.images[0],
+      oldPrice: clickedProd.oldPrice,
+      currentPrice: clickedProd.price,
+      _id: clickedProd._id,
+      discount: clickedProd.discount,
+      quantity: 1,
+    }));
+  };
+
+
+
   return (
     <div
       className={`max-w-xs mb-10 cursor-pointer shadow-lg rounded-lg overflow-hidden hover:scale-102 border border-[#c0bbbbde] transition-transform duration-200 p-5 ${
-        dark ? "bg-black text-white" : "bg-blue-300 text-black"
+        dark ? "bg-black text-white" : "bg-white text-black"
       }  `}
       onClick={() => onProductClick(product.id)}
     >
@@ -57,6 +84,10 @@ function ProductCard({ product, onProductClick }) {
           <button
             className="  btn-prismary text-white text-center py-3 px-4  w-[80%]
             rounded-lg bg-red-700 transition flex cursor-pointer justify-center gap-2 "
+            onClick={(e) => {
+              e.stopPropagation();
+              cartFN(product);
+            }}
           >
             <ShoppingCart size={22} />
             <span className="font-semibold "> Add To Cart</span>

@@ -13,9 +13,9 @@ function HomePage() {
   const { dark } = useContext(darkmodeContext);
   const [trendingproducts, settrendingproducts] = useState([]);
   const [featuredata, setfeaturedata] = useState([]);
-  const [limit, setlimit] = useState(20);
+  const [limit, setlimit] = useState(28);
   const [loading, setloading] = useState(false);
-  const [filterdata, setfilterdata] = useState([]);
+  // const [filterdata, setfilterdata] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
   const [activeTab, setActiveTab] = useState("all");
   const [data, setdata] = useState([]);
@@ -90,9 +90,9 @@ function HomePage() {
     setActiveTab(tabName);
 
     if (tabName === "all") {
-      setdata(filterdata);
+      setdata(allProducts);
     } else {
-      const filtered = filterdata.filter((val) => val.brand === tabName);
+      const filtered = allProducts.filter((val) => val.brand === tabName);
       setdata(filtered);
     }
   };
@@ -115,7 +115,6 @@ function HomePage() {
     `;
   };
   function handleNext(id) {
-    console.log("id", id);
     window.open(`/products/${id}`, "_blank");
   }
 
@@ -247,7 +246,7 @@ function HomePage() {
         <div>
           <div
             className={`${
-              dark ? "bg-black text-white" : "bg-blue-100 text-black"
+              dark ? "bg-black text-white" : "bg-[#f1f3f6] text-black"
             } flex flex-wrap justify-between flex-col md:flex-row  items-center md:items-normal  gap-10 mt-20`}
           >
             {data && data.length > 0 ? (
