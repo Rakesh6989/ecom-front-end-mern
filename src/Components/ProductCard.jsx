@@ -13,6 +13,7 @@ function ProductCard({ product, onProductClick }) {
     _id: "",
     discount: "",
     quantity: "",
+    category: "",
   });
 
   const cartFN = (clickedProd) => {
@@ -26,15 +27,17 @@ function ProductCard({ product, onProductClick }) {
       _id: clickedProd._id,
       discount: clickedProd.discount,
       quantity: 1,
+      category: clickedProd.prodCategory,
     }));
   };
-
-
+  useEffect(() => {
+    console.log("cardsendtdata", cartsendData);
+  }, [cartsendData]);
 
   return (
     <div
       className={`max-w-xs mb-10 cursor-pointer shadow-lg rounded-lg overflow-hidden hover:scale-102 border border-[#c0bbbbde] transition-transform duration-200 p-5 ${
-        dark ? "bg-black text-white" : "bg-white text-black"
+        dark ? "bg-black text-white" : "bg-[#f1f3f6] text-black"
       }  `}
       onClick={() => onProductClick(product.id)}
     >
