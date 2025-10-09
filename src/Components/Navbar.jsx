@@ -4,6 +4,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { darkmodeContext } from "../Context/DarkModeContext";
+import { CartContext } from "../Context/cartContext";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -12,6 +13,8 @@ import SearchIcon from "@mui/icons-material/Search";
 
 function Navbar() {
   const { dark, setdark } = useContext(darkmodeContext);
+  const { cartItems } = useContext(CartContext);
+  const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
@@ -79,11 +82,16 @@ function Navbar() {
               </button>
 
               <button
-                className="hover:text-gray-600 cursor-pointer p-2"
+                className="relative hover:text-gray-600 cursor-pointer p-2"
                 onClick={() => navigate("/cart")}
                 aria-label="Shopping cart"
               >
-                <ShoppingCartIcon />
+                <ShoppingCartIcon className="w-6 h-6" />
+                {totalItems > 0 && (
+                  <span className="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+                    {totalItems}
+                  </span>
+                )}
               </button>
 
               <button

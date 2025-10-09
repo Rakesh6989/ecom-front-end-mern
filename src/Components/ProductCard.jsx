@@ -1,9 +1,12 @@
 import { Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { darkmodeContext } from "../Context/DarkModeContext";
+import { CartContext } from "../Context/cartContext";
 import { ShoppingCart, Truck, ArrowRight, Zap } from "lucide-react";
 function ProductCard({ product, onProductClick }) {
   const { dark } = useContext(darkmodeContext);
+  const { addToCart } = useContext(CartContext);
+
   const [cartsendData, setcartsendData] = useState({
     brand: "",
     productName: "",
@@ -16,23 +19,20 @@ function ProductCard({ product, onProductClick }) {
     category: "",
   });
 
-  const cartFN = (clickedProd) => {
-    setcartsendData((prev) => ({
-      ...prev,
-      brand: clickedProd.brand,
-      productName: clickedProd.name,
-      productImage: clickedProd.images[0],
-      oldPrice: clickedProd.oldPrice,
-      currentPrice: clickedProd.price,
-      _id: clickedProd._id,
-      discount: clickedProd.discount,
-      quantity: 1,
-      category: clickedProd.prodCategory,
-    }));
-  };
-  useEffect(() => {
-    console.log("cardsendtdata", cartsendData);
-  }, [cartsendData]);
+    const cartFN = (product) => {
+      console.log(product)
+      addToCart({
+        brand: product.brand,
+        productName: product.name,
+        productImage: product.images[0],
+        oldPrice: product.oldPrice,
+        currentPrice: product.price,
+        _id: product._id,
+        discount: product.discount,
+        quantity: 1,
+        category: product.prodCategory,
+      });
+    };
 
   return (
     <div

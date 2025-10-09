@@ -13,6 +13,7 @@ import SignUp from "./Pages/SignUp";
 import ProductRender from "./Components/ProductRender";
 import ScrollToTop from "./Components/ScrollToTop";
 import ScrollToTopButton from "./Components/ScrollToTopButton";
+import Cart from "./features/Cart";
 function App() {
   return (
     <>
@@ -28,6 +29,7 @@ function App() {
         <Route path="/Profile" element={<Profile />} />
         <Route path="/Profile/sign-up" element={<SignUp />} />
         <Route path="/products/:id" element={<ProductRender />} />
+        <Route path="/cart" element={<Cart />} />
       </Routes>
 
       <Footer />
