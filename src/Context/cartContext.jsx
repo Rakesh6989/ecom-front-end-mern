@@ -18,18 +18,22 @@ export const CartProvider = ({ children }) => {
             : item
         );
       } else {
-        return [...prev, product];
+        return [...prev, { ...product, quantity: 1 }];
       }
     });
   };
 
-  // persist on every change
+  const removefromCart = (id) => {
+    const updatedVal = cartItems.filter((val) => val._id !== id);
+    setcartItems((prev) => [...prev, updatedVal]);
+  };
+
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart }}>
+    <CartContext.Provider value={{ cartItems, addToCart, removefromCart }}>
       {children}
     </CartContext.Provider>
   );

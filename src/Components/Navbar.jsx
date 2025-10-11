@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
@@ -18,7 +18,9 @@ function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
-
+  useEffect(() => {
+    console.log("totalItems", totalItems);
+  }, [totalItems]);
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {

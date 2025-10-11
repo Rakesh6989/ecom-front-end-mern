@@ -7,32 +7,20 @@ function ProductCard({ product, onProductClick }) {
   const { dark } = useContext(darkmodeContext);
   const { addToCart } = useContext(CartContext);
 
-  const [cartsendData, setcartsendData] = useState({
-    brand: "",
-    productName: "",
-    productImage: "",
-    oldPrice: "",
-    currentPrice: "",
-    _id: "",
-    discount: "",
-    quantity: "",
-    category: "",
-  });
-
-    const cartFN = (product) => {
-      console.log(product)
-      addToCart({
-        brand: product.brand,
-        productName: product.name,
-        productImage: product.images[0],
-        oldPrice: product.oldPrice,
-        currentPrice: product.price,
-        _id: product._id,
-        discount: product.discount,
-        quantity: 1,
-        category: product.prodCategory,
-      });
-    };
+  const cartFN = (product) => {
+    console.log(product);
+    addToCart({
+      brand: product.brand,
+      productName: product.name,
+      productImage: product.images[0],
+      oldPrice: product.oldPrice,
+      currentPrice: product.price,
+      _id: product._id,
+      discount: product.discount,
+      quantity: 1,
+      category: product.prodCategory,
+    });
+  };
 
   return (
     <div
