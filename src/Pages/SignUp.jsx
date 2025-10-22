@@ -1,252 +1,187 @@
-import { useState } from "react";
-import Person2Icon from "@mui/icons-material/Person2";
-import PhoneInput from "react-phone-input-2";
-import { Link } from "react-router-dom";
-import "react-phone-input-2/lib/style.css";
-import EmailIcon from "@mui/icons-material/Email";
-import LockOpenIcon from "@mui/icons-material/LockOpen";
-import TinyModal from "../Components/TinyModal";
+"use client";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import axios from "axios";
+import { registerSchema } from "../validations/registerSchema";
+import {
+  User,
+  Mail,
+  Lock,
+  ShieldCheck,
+  Loader2,
+  LogIn,
+} from "lucide-react";
 
-function SignUp() {
-  const [formdata, setformdata] = useState({
-    name: "",
-    phone: "",
+export default function RegisterForm() {
+  const initialValues = {
+    fullName: "",
     email: "",
-    pass: "",
-    cnfpass: "",
-  });
-  const [btnval, setbtnval] = useState({
-    admin: false,
-    customer: true,
-    btnText: "Customer",
-  });
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const registerschema = Yup.object({
-    name: Yup.string().required("Name Is Required"),
-    phone: Yup.string()
-      .matches(/^[0-9]{10}$/, "Phone must be 10 digits")
-      .required("Phone is required"),
-      email:Yup.string().email("Invalid email").required("Email is Required"),
-      pass:Yup.string().oneOf([])
-  });
-
-  const handlechange = (e) => {
-    const { name, value } = e.target;
-
-    setformdata((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-  const handleOk = () => {
-    if (btnval.admin) {
-      setbtnval((prev) => ({
-        ...prev,
-        btnText: "Admin",
-      }));
-    }
-    if (btnval.customer) {
-      setbtnval((prev) => ({
-        ...prev,
-        btnText: "Customer",
-      }));
-    }
-
-    setIsModalOpen(false);
+    password: "",
+    confirmPassword: "",
+    role: "",
   };
 
-  const handlesubmit = async (e) => {
-    e.preventDefault();
-    const { name, phone, email, pass, cnfpass } = formdata;
-    if (!name || !phone || !email || !pass || !cnfpass) {
-      alert("Please Input All fields");
-      return;
-    }
-    if (pass !== cnfpass) {
-      alert("Password didn't match");
-      return;
-    }
-    try {
-      const res = await fetch("http://localhost:5000/api/users/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formdata),
-      });
-      if (res.ok) {
-        const data = await res.json();
-        console.log("Form Submitted Successfully", data);
-      } else console.log("Something Went Wrong");
-    } catch (c) {
-      console.log("API Connection Failed", c);
-    }
+  const handleSubmit = (values, { setSubmitting, resetForm }) => {
+    console.log("Form Submitted:", values);
+    alert("Form submitted successfully!");
+    setSubmitting(false);
+    resetForm();
   };
 
   return (
-    <div className=" bg-blue-200 pb-15">
-      <div className="max-w-2xl w-full mx-auto ">
-        <p className="text-center py-6 font-bold text-3xl text-blue-900">
-          Manage Your Profile
-        </p>
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 py-4 font-semibold text-lg">
-          <span>Login / Sign Up as</span>
-          <button
-            className="w-full sm:w-auto mx-0 sm:mx-2 cursor-pointer text-lg bg-green-600 text-white py-2 px-5 rounded-lg shadow-md hover:bg-green-700 transition"
-            onClose={() => {
-              setbtnval(() => ({
-                admin: false,
-                customer: true,
-                // btnText: "Customer",
-              }));
-              // setIsModalOpen(false);
-            }}
-          >
-            Customer
-          </button>
-          <span className="hidden sm:block">or</span>
-
-          <button
-            className="w-full sm:w-auto mx-0 sm:mx-2 cursor-pointer text-lg bg-blue-600 text-white py-2 px-5 rounded-lg shadow-md hover:bg-blue-700 transition"
-            onClick={() => {
-              setbtnval({
-                admin: true,
-                customer: false,
-              });
-              setIsModalOpen(true);
-            }}
-          >
-            Admin
-          </button>
-        </div>
-
-        <div className="bg-blue-100  shadow-xl p-7 rounded-xl my-8">
-          <h2 className="text-2xl text-center font-bold text-gray-600 mb-6">
-            Sign Up as a{" "}
-            <span className="bg-yellow-300 px-2 rounded-xl">
-              {btnval.btnText == "Admin"
-                ? "Admin"
-                : btnval.btnText == "Customer"
-                ? "Customer"
-                : ""}
-            </span>
+    <div className="flex items-center pt-20 justify-center min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100 px-4 sm:px-6">
+      <div className="bg-white/90 backdrop-blur-xl shadow-xl hover:shadow-2xl transition-all duration-300 rounded-3xl p-8 sm:p-10 w-full max-w-md md:max-w-lg border border-gray-100">
+        <div className="text-center mb-8">
+          <div className="flex justify-center mb-4">
+            <ShieldCheck className="w-12 h-12 text-blue-600" />
+          </div>
+          <h2 className="text-3xl font-bold text-gray-800">
+            Create an Account
           </h2>
-
-          <form className="py-4  " onSubmit={handlesubmit}>
-            <div className="my-2 relative">
-              <label>Enter your Name</label>
-              <input
-                type="text"
-                placeholder=" Name"
-                className="border w-full pl-10 p-2 mt-2 rounded"
-                name="name"
-                value={formdata.name}
-                onChange={handlechange}
-                // required={true}
-              />
-              <Person2Icon className="absolute top-10 left-2   text-gray-500" />
-            </div>
-
-            <div className="my-2 relative">
-              <label>
-                <label>Enter your Phone Number</label>
-                <PhoneInput
-                  country={"in"}
-                  value={formdata.phone}
-                  onChange={(value) =>
-                    setformdata((prev) => ({ ...prev, phone: value }))
-                  }
-                  inputStyle={{
-                    width: "100%",
-                    padding: "10px",
-                    borderRadius: "8px",
-                    border: "1px solid #ccc",
-                    fontSize: "16px",
-                    outline: "none",
-                  }}
-                  buttonStyle={{
-                    border: "none",
-                  }}
-                  containerStyle={{ marginBottom: "1rem" }}
-                />
-              </label>
-            </div>
-            <div className="my-2 relative">
-              <label>Enter your Email</label>
-              <input
-                type="email"
-                placeholder=" Email"
-                name="email"
-                className="border w-full p-2 pl-10 mt-2  rounded"
-                value={formdata.email}
-                onChange={handlechange}
-                // required={true}
-              />
-              <EmailIcon className="absolute top-10 left-2   text-gray-500" />
-            </div>
-
-            <div className="my-2 relative">
-              <lable>Enter Your Password</lable>
-              <input
-                type="password"
-                placeholder="Password"
-                name="pass"
-                value={formdata.pass}
-                onChange={handlechange}
-                className="border w-full p-2 pl-10 mt-2 rounded"
-                // required={true}
-              />
-              <LockOpenIcon className="absolute top-10 left-2   text-gray-500" />
-            </div>
-
-            <div className="my-2 relative">
-              <lable>Re-Enter Your Password</lable>
-
-              <input
-                type="password"
-                placeholder="Confirm Password"
-                name="cnfpass"
-                value={formdata.cnfpass}
-                onChange={handlechange}
-                // required={true}
-                className="border w-full p-2 mt-2 pl-10 rounded"
-              />
-              <LockOpenIcon className="absolute top-10 left-2   text-gray-500" />
-            </div>
-
-            <button className="w-full text-lg font-semibold mt-4 bg-red-600 hover:bg-red-700 text-white py-3 rounded-lg  transition shadow-md">
-              Sign Up
-            </button>
-            <p className="text-center mt-4 text-gray-600 text-sm">
-              Already have an Account ?
-              <Link to="/profile">
-                <span className="text-blue-600 font-bold ml-3 cursor-pointer hover:underline">
-                  Log in
-                </span>
-              </Link>
-            </p>
-          </form>
+          <p className="text-gray-500 text-sm mt-2">
+            Join our developer community today
+          </p>
         </div>
-      </div>
 
-      <TinyModal
-        isOpen={isModalOpen}
-        message="As an Admin, you can manage products (add, update, delete). Changes will be reflected live after owner verification"
-        onOk={handleOk}
-        onClose={() => {
-          setbtnval((prev) => ({
-            ...prev,
-            btnText: "Customer",
-          }));
-          setIsModalOpen(false);
-        }}
-      />
+        <Formik
+          initialValues={initialValues}
+          validationSchema={registerSchema}
+          onSubmit={handleSubmit}
+        >
+          {({ isSubmitting }) => (
+            <Form className="space-y-6">
+              <div>
+                <label className="block mb-1 font-medium text-gray-700">
+                  Full Name
+                </label>
+                <div className="relative">
+                  <User className="absolute left-3 top-3.5 text-gray-400 w-5 h-5" />
+                  <Field
+                    name="fullName"
+                    type="text"
+                    placeholder="John Doe"
+                    className="w-full border border-gray-300 rounded-xl pl-10 pr-3 py-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-gray-700 placeholder-gray-400"
+                  />
+                </div>
+                <ErrorMessage
+                  name="fullName"
+                  component="div"
+                  className="text-red-500 text-sm mt-1"
+                />
+              </div>
+
+              <div>
+                <label className="block mb-1 font-medium text-gray-700">
+                  Email Address
+                </label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-3.5 text-gray-400 w-5 h-5" />
+                  <Field
+                    name="email"
+                    type="email"
+                    placeholder="you@example.com"
+                    className="w-full border border-gray-300 rounded-xl pl-10 pr-3 py-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-gray-700 placeholder-gray-400"
+                  />
+                </div>
+                <ErrorMessage
+                  name="email"
+                  component="div"
+                  className="text-red-500 text-sm mt-1"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block mb-1 font-medium text-gray-700">
+                    Password
+                  </label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-3.5 text-gray-400 w-5 h-5" />
+                    <Field
+                      name="password"
+                      type="password"
+                      placeholder="••••••••"
+                      className="w-full border border-gray-300 rounded-xl pl-10 pr-3 py-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-gray-700 placeholder-gray-400"
+                    />
+                  </div>
+                  <ErrorMessage
+                    name="password"
+                    component="div"
+                    className="text-red-500 text-sm mt-1"
+                  />
+                </div>
+
+                <div>
+                  <label className="block mb-1 font-medium text-gray-700">
+                    Confirm Password
+                  </label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-3.5 text-gray-400 w-5 h-5" />
+                    <Field
+                      name="confirmPassword"
+                      type="password"
+                      placeholder="••••••••"
+                      className="w-full border border-gray-300 rounded-xl pl-10 pr-3 py-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-gray-700 placeholder-gray-400"
+                    />
+                  </div>
+                  <ErrorMessage
+                    name="confirmPassword"
+                    component="div"
+                    className="text-red-500 text-sm mt-1"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block mb-1 font-medium text-gray-700">
+                  Role
+                </label>
+                <div className="relative">
+                  <ShieldCheck className="absolute left-3 top-3.5 text-gray-400 w-5 h-5" />
+                  <Field
+                    as="select"
+                    name="role"
+                    className="w-full border border-gray-300 rounded-xl pl-10 pr-3 py-2.5 bg-white text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                  >
+                    <option value="">Select your role</option>
+                    <option value="customer">Customer</option>
+                    <option value="admin">Admin</option>
+                  </Field>
+                </div>
+                <ErrorMessage
+                  name="role"
+                  component="div"
+                  className="text-red-500 text-sm mt-1"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-blue-800 focus:ring-4 focus:ring-blue-200 transition-all duration-300 transform hover:scale-[1.02]"
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" /> Submitting...
+                  </>
+                ) : (
+                  <>
+                    <LogIn className="w-5 h-5" /> Register
+                  </>
+                )}
+              </button>
+
+              <p className="text-center text-gray-500 text-sm mt-4">
+                Already have an account?{" "}
+                <a
+                  href="#"
+                  className="text-blue-600 hover:text-blue-800 font-medium"
+                >
+                  Sign in
+                </a>
+              </p>
+            </Form>
+          )}
+        </Formik>
+      </div>
     </div>
   );
 }
-
-export default SignUp;

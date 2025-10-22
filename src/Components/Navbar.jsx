@@ -112,7 +112,7 @@ function Navbar() {
             onClick={() => setIsOpen(!isOpen)}
           >
             {isOpen ? (
-              <CloseIcon fontSize="large" />
+              <CloseIcon fontSize="large" /> 
             ) : (
               <MenuIcon fontSize="large" />
             )}
