@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
@@ -29,7 +29,18 @@ function Navbar() {
       // navigate(`/search?q=${searchQuery}`);
     }
   };
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const profileRef = useRef(null);
 
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (profileRef.current && !profileRef.current.contains(e.target)) {
+        setShowProfileMenu(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
   return (
     <div
       className={`p-5 z-50 fixed w-full ${
@@ -95,14 +106,56 @@ function Navbar() {
                   </span>
                 )}
               </button>
+              <div className="relative group">
+                <div className="hover:text-gray-600 cursor-pointer p-2 flex items-center">
+                  <Person2Icon />
+                </div>
 
-              <button
-                className="hover:text-gray-600 cursor-pointer p-2"
-                onClick={() => navigate("/profile")}
-                aria-label="User profile"
-              >
-                <Person2Icon />
-              </button>
+                <div
+                  className={`absolute right-0 mt-5 w-48 rounded-lg shadow-lg z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ${
+                    dark ? "bg-gray-800 text-white" : "bg-white text-black"
+                  }`}
+                >
+                  <ul className="py-2 text-sm">
+                    <li
+                      onClick={() => navigate("/Profile/sign-up")}
+                      className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
+                    >
+                      Login / Signup
+                    </li>
+                    <li
+                      onClick={() => navigate("/orders")}
+                      className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
+                    >
+                      My Orders
+                    </li>
+                    <li
+                      onClick={() => navigate("/track-order")}
+                      className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
+                    >
+                      Track Order
+                    </li>
+                    <li
+                      onClick={() => navigate("/payment-methods")}
+                      className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
+                    >
+                      Payment Methods
+                    </li>
+                    <li
+                      onClick={() => navigate("/address")}
+                      className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
+                    >
+                      Update Address
+                    </li>
+                    <li
+                      onClick={() => navigate("/profile")}
+                      className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
+                    >
+                      Profile Settings
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -112,7 +165,7 @@ function Navbar() {
             onClick={() => setIsOpen(!isOpen)}
           >
             {isOpen ? (
-              <CloseIcon fontSize="large" /> 
+              <CloseIcon fontSize="large" />
             ) : (
               <MenuIcon fontSize="large" />
             )}

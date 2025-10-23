@@ -27,8 +27,8 @@ export default function RegisterForm() {
   };
 
   return (
-    <div className="flex items-center pt-20 justify-center min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100 px-4 sm:px-6">
-      <div className="bg-white/90 backdrop-blur-xl shadow-xl hover:shadow-2xl transition-all duration-300 rounded-3xl p-8 sm:p-10 w-full max-w-md md:max-w-lg border border-gray-100">
+    <div className="flex min-h-[50vh] items-center pt-20 justify-center  bg-gradient-to-br from-blue-50 via-white to-blue-100 px-4 sm:px-6">
+      <div className="bg-white/90 backdrop-blur-xl shadow-xl hover:shadow-2xl transition-all duration-300 rounded-3xl p-8 sm:p-10 w-full max-w-md md:max-w-3xl border border-gray-100">
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
             <ShieldCheck className="w-12 h-12 text-blue-600" />
