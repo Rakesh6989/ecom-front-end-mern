@@ -118,10 +118,16 @@ function Navbar() {
                 >
                   <ul className="py-2 text-sm">
                     <li
-                      onClick={() => navigate("/Profile/sign-up")}
+                      onClick={() => navigate("/sign-up")}
                       className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
                     >
-                      Login / Signup
+                      Signup
+                    </li>
+                    <li
+                      onClick={() => navigate("/login")}
+                      className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
+                    >
+                      Login
                     </li>
                     <li
                       onClick={() => navigate("/orders")}
@@ -148,10 +154,22 @@ function Navbar() {
                       Update Address
                     </li>
                     <li
+                      onClick={() => navigate("/admin-management")}
+                      className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
+                    >
+                      Admin Management
+                    </li>
+                    <li
                       onClick={() => navigate("/profile")}
                       className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
                     >
                       Profile Settings
+                    </li>
+                    <li
+                      onClick={() => navigate("/admin-product-creation")}
+                      className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
+                    >
+                      Admin Control
                     </li>
                   </ul>
                 </div>

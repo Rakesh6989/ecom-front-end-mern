@@ -14,6 +14,9 @@ import ProductRender from "./Components/ProductRender";
 import ScrollToTop from "./Components/ScrollToTop";
 import ScrollToTopButton from "./Components/ScrollToTopButton";
 import Cart from "./features/Cart";
+import LoginForm from "./Pages/LoginPage";
+import SuperAdminDashboard from "./Dashboard/SuperAdminDashboard";
+import AdminProductCreate from "./Dashboard/AdminProductCreate";
 function App() {
   return (
     <>
@@ -27,9 +30,12 @@ function App() {
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/blog-page" element={<BlogPage />} />
         <Route path="/Profile" element={<Profile />} />
-        <Route path="/Profile/sign-up" element={<SignUp />} />
+        <Route path="/sign-up" element={<SignUp />} />
         <Route path="/products/:id" element={<ProductRender />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/login" element={<LoginForm />} />
+        <Route path="/admin-management" element={<SuperAdminDashboard />} />
+        <Route path="/admin-product-creation" element={<AdminProductCreate />} />
       </Routes>
 
       <Footer />

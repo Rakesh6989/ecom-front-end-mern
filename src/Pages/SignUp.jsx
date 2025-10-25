@@ -1,15 +1,8 @@
 "use client";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { registerSchema } from "../validations/registerSchema";
-import {
-  User,
-  Mail,
-  Lock,
-  ShieldCheck,
-  Loader2,
-  LogIn,
-} from "lucide-react";
-
+import { User, Mail, Lock, ShieldCheck, Loader2, LogIn } from "lucide-react";
+import { Link } from "react-router-dom";
 export default function RegisterForm() {
   const initialValues = {
     fullName: "",
@@ -171,12 +164,12 @@ export default function RegisterForm() {
 
               <p className="text-center text-gray-500 text-sm mt-4">
                 Already have an account?{" "}
-                <a
-                  href="#"
+                <Link
+                  to={"/login"}
                   className="text-blue-600 hover:text-blue-800 font-medium"
                 >
                   Sign in
-                </a>
+                </Link>
               </p>
             </Form>
           )}
