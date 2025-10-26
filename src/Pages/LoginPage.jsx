@@ -16,21 +16,25 @@ export default function LoginForm() {
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
       console.log("data", values);
-      await axios.post("http://localhost:5000/login", values);
-      localStorage.setItem("authToken", res.data.token);
-
+      const res = await axios.post("http://localhost:5000/login", values);
+      const token = res.data.token;
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+      console.log("res.data.user", res.data.user);
       settoastdata((prev) => ({
         ...prev,
         showtoast: true,
         message: "Login Successfull!",
         type: "success",
       }));
+      setTimeout(() => {
+        navigate("/");
+      }, 1500);
     } catch (error) {
       console.error("Errors are", error);
-      //   alert("Something went wrong");
       const errorMessage =
-        error.response?.data?.message || // from backend
-        error.message || // from Axios itself
+        error.response?.data?.message ||
+        error.message ||
         "Something went wrong. Please try again.";
       settoastdata((prev) => ({
         ...prev,

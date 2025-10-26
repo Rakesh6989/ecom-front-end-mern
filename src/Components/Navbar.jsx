@@ -17,6 +17,17 @@ function Navbar() {
   const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    alert("Logged out successfully!");
+    navigate("/login");
+  };
+  const handleLogin = () => {
+    navigate("/login");
+  };
+  const token = localStorage.getItem("token");
+
   const navigate = useNavigate();
   useEffect(() => {
     console.log("totalItems", totalItems);
@@ -117,18 +128,25 @@ function Navbar() {
                   }`}
                 >
                   <ul className="py-2 text-sm">
-                    <li
-                      onClick={() => navigate("/sign-up")}
-                      className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
-                    >
-                      Signup
-                    </li>
-                    <li
-                      onClick={() => navigate("/login")}
-                      className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
-                    >
-                      Login
-                    </li>
+                    {/* 👇 Show Signup & Login only when user is NOT logged in */}
+                    {!token && (
+                      <>
+                        <li
+                          onClick={() => navigate("/sign-up")}
+                          className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
+                        >
+                          Signup
+                        </li>
+                        <li
+                          onClick={() => navigate("/login")}
+                          className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
+                        >
+                          Login
+                        </li>
+                      </>
+                    )}
+
+                    {/* 👇 Common options visible to everyone */}
                     <li
                       onClick={() => navigate("/orders")}
                       className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
@@ -160,17 +178,19 @@ function Navbar() {
                       Admin Management
                     </li>
                     <li
-                      onClick={() => navigate("/profile")}
-                      className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
-                    >
-                      Profile Settings
-                    </li>
-                    <li
                       onClick={() => navigate("/admin-product-creation")}
                       className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
                     >
                       Admin Control
                     </li>
+                    {token && (
+                      <li
+                        onClick={handleLogout}
+                        className="px-4 py-2 hover:bg-red-200 dark:hover:bg-red-700 cursor-pointer text-red-500 font-semibold"
+                      >
+                        Logout
+                      </li>
+                    )}
                   </ul>
                 </div>
               </div>
