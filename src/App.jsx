@@ -15,6 +15,7 @@ import LoginForm from "./Pages/LoginPage";
 import SuperAdminDashboard from "./Dashboard/SuperAdminDashboard";
 import AdminProductCreate from "./Dashboard/AdminProductCreate";
 import ProtectedRoute from "./Components/ProtectedRoute";
+import ForgotPassword from "./Components/ForgotPassword";
 function App() {
   return (
     <>
@@ -32,10 +33,11 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/admin-management" element={<SuperAdminDashboard />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route
           path="/admin-product-creation"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute requiredRole="admin">
               <AdminProductCreate />
             </ProtectedRoute>
           }

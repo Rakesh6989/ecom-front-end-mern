@@ -196,8 +196,6 @@ function Navbar() {
               </div>
             </div>
           </div>
-
-          {/* Mobile Menu Toggle */}
           <div
             className="md:hidden cursor-pointer p-2"
             onClick={() => setIsOpen(!isOpen)}
@@ -209,8 +207,6 @@ function Navbar() {
             )}
           </div>
         </div>
-
-        {/* Mobile Search - Always visible on mobile */}
         <div className="md:hidden mt-3">
           <form onSubmit={handleSearch} className="relative">
             <SearchIcon className="absolute top-2.5 left-3 text-gray-500" />

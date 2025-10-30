@@ -1,7 +1,6 @@
 // Import Yup
 import * as Yup from "yup";
 
-// Create and export the schema
 export const registerSchema = Yup.object({
   fullName: Yup.string()
     .min(3, "Full name must be at least 3 characters long")

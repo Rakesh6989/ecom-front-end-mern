@@ -87,7 +87,6 @@ export default function LoginForm() {
                   className="text-red-500 text-sm mt-1"
                 />
               </div>
-
               <div>
                 <label className="block mb-1 font-medium text-gray-700">
                   Password
@@ -107,7 +106,6 @@ export default function LoginForm() {
                   className="text-red-500 text-sm mt-1"
                 />
               </div>
-
               <button
                 type="submit"
                 disabled={isSubmitting}
@@ -123,15 +121,20 @@ export default function LoginForm() {
                   </>
                 )}
               </button>
-
               <p className="text-center text-gray-500 text-sm mt-4">
                 Don’t have an account?{" "}
                 <span
                   onClick={() => navigate("/sign-up")}
-                  className="text-blue-600 hover:text-blue-800 font-medium cursor-pointer"
+                  className="text-blue-600 hover:text-blue-800  pl-1 font-medium cursor-pointer"
                 >
                   Sign up
                 </span>
+              </p>
+              <p
+                className="text-blue-600 text-center text-sm hover:text-blue-800 font-medium cursor-pointer"
+                onClick={() => navigate("/forgot-password")}
+              >
+                Forgot Password?
               </p>
             </Form>
           )}
