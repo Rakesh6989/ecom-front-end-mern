@@ -17,298 +17,285 @@ function Navbar() {
   const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [showSearchResults, setShowSearchResults] = useState(false);
+  
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     alert("Logged out successfully!");
     navigate("/login");
   };
-  const handleLogin = () => {
-    navigate("/login");
-  };
+  
   const token = localStorage.getItem("token");
-
   const navigate = useNavigate();
-  useEffect(() => {
-    console.log("totalItems", totalItems);
-  }, [totalItems]);
+  
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
       console.log("Searching for:", searchQuery);
-      // Add your search logic here
-      // navigate(`/search?q=${searchQuery}`);
     }
   };
-  const [showProfileMenu, setShowProfileMenu] = useState(false);
-  const profileRef = useRef(null);
+  
+  const searchRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (profileRef.current && !profileRef.current.contains(e.target)) {
-        setShowProfileMenu(false);
+      if (searchRef.current && !searchRef.current.contains(e.target)) {
+        setShowSearchResults(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-  return (
-    <div
-      className={`p-5 z-50 fixed w-full ${
-        dark ? "bg-black text-white" : "bg-[#2874f0] text-black"
-      }`}
-    >
-      <nav className="container mx-auto px-4">
-        <div className="flex justify-between items-center">
-          <div
-            className="flex items-center gap-2 cursor-pointer"
-            onClick={() => navigate("/")}
-          >
-            <img
-              src="https://cdn.pixabay.com/photo/2013/07/12/19/05/notebook-154358_1280.png"
-              className="h-10 w-10"
-              alt="LapTopiya Logo"
-            />
-            <h1 className="text-lg font-bold">LapTopiya</h1>
-          </div>
-          <div className="hidden md:flex relative">
-            <form onSubmit={handleSearch} className="relative  max-w-lg ">
-              <SearchIcon className="absolute top-2.5 right-3 text-gray-500" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search for Laptop, Brand and More.."
-                className={`border p-2 pl-4 pr-4 rounded-lg w-80 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                  dark
-                    ? "bg-gray-800 border-gray-600 text-white placeholder-gray-400"
-                    : "bg-white border-gray-300 text-black placeholder-gray-800"
-                }`}
-              />
-            </form>
 
-            {searchQuery && (
-              <>
-                <div className="bg-blue-300 absolute w-full top-[60px]">
-                  {searchQuery}
+  return (
+    <>
+      {isOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+      
+      <div className={`fixed w-full top-0 left-0 z-50 shadow-lg transition-all duration-300 ${
+          dark 
+            ? "bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white border-b border-gray-700" 
+            : "bg-gradient-to-r from-blue-600 via-blue-500 to-blue-600 text-white"
+        }`}>
+        <nav className="container mx-auto px-4 py-3">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center gap-3 cursor-pointer group" onClick={() => navigate("/")}>
+              <div className="relative">
+                <img
+                  src="https://cdn.pixabay.com/photo/2013/07/12/19/05/notebook-154358_1280.png"
+                  className="h-12 w-12 transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6"
+                  alt="LapTopiya Logo"
+                />
+                <div className="absolute -inset-1 bg-white opacity-20 rounded-full blur-md group-hover:opacity-30 transition-opacity" />
+              </div>
+              <div>
+                <h1 className="text-xl font-bold tracking-wide">LapTopiya</h1>
+                <p className="text-xs opacity-80">Your Tech Partner</p>
+              </div>
+            </div>
+
+            <div className="hidden md:flex relative" ref={searchRef}>
+              <form onSubmit={handleSearch} className="relative">
+                <div className="relative group">
+                  <SearchIcon className="absolute top-3 left-4 text-gray-400 transition-colors group-hover:text-blue-500" />
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => {
+                      setSearchQuery(e.target.value);
+                      setShowSearchResults(e.target.value.length > 0);
+                    }}
+                    onFocus={() => searchQuery && setShowSearchResults(true)}
+                    placeholder="Search for Laptops, Brands and More..."
+                    className={`border-2 py-3 pl-12 pr-4 rounded-full w-96 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-opacity-50 ${
+                      dark
+                        ? "bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-blue-400"
+                        : "bg-white border-white text-gray-800 placeholder-gray-500 focus:border-blue-300 focus:ring-blue-300 shadow-md"
+                    }`}
+                  />
                 </div>
-              </>
-            )}
-          </div>
-          <div className="hidden md:flex items-center gap-6">
-            <div className="flex items-center gap-4">
+              </form>
+
+              {showSearchResults && searchQuery && (
+                <div className={`absolute w-full top-16 rounded-xl shadow-2xl overflow-hidden z-50 ${
+                  dark ? "bg-gray-800 border border-gray-700" : "bg-white border border-gray-200"
+                }`}>
+                  <div className="p-4">
+                    <p className="text-sm font-semibold mb-3 opacity-70">Search Results for "{searchQuery}"</p>
+                    <div className="space-y-2">
+                      <div className={`p-3 rounded-lg cursor-pointer transition-colors ${
+                        dark ? "hover:bg-gray-700" : "hover:bg-gray-100"
+                      }`}>
+                        <p className="font-medium">Example Result 1</p>
+                        <p className="text-xs opacity-60">Laptop category</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="hidden md:flex items-center gap-2">
               <button
-                className="hover:text-gray-600 cursor-pointer p-2"
+                className={`p-3 rounded-full transition-all duration-300 transform hover:scale-110 ${
+                  dark ? "hover:bg-gray-700 bg-gray-800" : "hover:bg-blue-400 bg-blue-500"
+                }`}
                 onClick={() => setdark(!dark)}
                 aria-label="Toggle dark mode"
               >
-                {dark ? <LightModeIcon /> : <DarkModeIcon />}
+                {dark ? <LightModeIcon className="text-yellow-300" /> : <DarkModeIcon className="text-gray-800" />}
               </button>
 
               <button
-                className="relative hover:text-gray-600 cursor-pointer p-2"
+                className={`relative p-3 rounded-full transition-all duration-300 transform hover:scale-110 ${
+                  dark ? "hover:bg-gray-700 bg-gray-800" : "hover:bg-blue-400 bg-blue-500"
+                }`}
                 onClick={() => navigate("/cart")}
                 aria-label="Shopping cart"
               >
                 <ShoppingCartIcon className="w-6 h-6" />
                 {totalItems > 0 && (
-                  <span className="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+                  <span className="absolute -top-1 -right-1 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-full text-xs w-6 h-6 flex items-center justify-center font-bold shadow-lg animate-pulse">
                     {totalItems}
                   </span>
                 )}
               </button>
-              <div className="relative group">
-                <div className="hover:text-gray-600 cursor-pointer p-2 flex items-center">
-                  <Person2Icon />
-                </div>
 
-                <div
-                  className={`absolute right-0 mt-5 w-48 rounded-lg shadow-lg z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ${
-                    dark ? "bg-gray-800 text-white" : "bg-white text-black"
-                  }`}
-                >
+              <div className="relative group">
+                <button className={`p-3 rounded-full transition-all duration-300 transform hover:scale-110 ${
+                    dark ? "hover:bg-gray-700 bg-gray-800" : "hover:bg-blue-400 bg-blue-500"
+                  }`}>
+                  <Person2Icon className="w-6 h-6" />
+                </button>
+
+                <div className={`absolute right-0 mt-4 w-56 rounded-xl shadow-2xl z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:mt-2 transition-all duration-300 overflow-hidden ${
+                    dark ? "bg-gray-800 text-white border border-gray-700" : "bg-white text-gray-800 border border-gray-200"
+                  }`}>
+                  {token && (
+                    <div className={`px-4 py-3 border-b ${dark ? "border-gray-700" : "border-gray-200"}`}>
+                      <p className="font-semibold">Welcome back!</p>
+                      <p className="text-xs opacity-60">Your Account</p>
+                    </div>
+                  )}
+
                   <ul className="py-2 text-sm">
-                    {/* 👇 Show Signup & Login only when user is NOT logged in */}
                     {!token && (
-                      <>
-                        <li
-                          onClick={() => navigate("/sign-up")}
-                          className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
-                        >
-                          Signup
+                      <div className={`pb-2 mb-2 border-b ${dark ? "border-gray-700" : "border-gray-200"}`}>
+                        <li onClick={() => navigate("/sign-up")} className={`px-4 py-3 cursor-pointer transition-colors flex items-center gap-2 ${
+                            dark ? "hover:bg-gray-700" : "hover:bg-blue-50"
+                          }`}>
+                          <span>📝</span> Sign Up
                         </li>
-                        <li
-                          onClick={() => navigate("/login")}
-                          className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
-                        >
-                          Login
+                        <li onClick={() => navigate("/login")} className={`px-4 py-3 cursor-pointer transition-colors flex items-center gap-2 ${
+                            dark ? "hover:bg-gray-700" : "hover:bg-blue-50"
+                          }`}>
+                          <span>🔐</span> Login
                         </li>
-                      </>
+                      </div>
                     )}
 
-                    {/* 👇 Common options visible to everyone */}
-                    <li
-                      onClick={() => navigate("/orders")}
-                      className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
-                    >
-                      My Orders
+                    <li onClick={() => navigate("/orders")} className={`px-4 py-3 cursor-pointer transition-colors flex items-center gap-2 ${
+                        dark ? "hover:bg-gray-700" : "hover:bg-blue-50"
+                      }`}>
+                      <span>📦</span> My Orders
                     </li>
-                    <li
-                      onClick={() => navigate("/track-order")}
-                      className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
-                    >
-                      Track Order
+                    <li onClick={() => navigate("/track-order")} className={`px-4 py-3 cursor-pointer transition-colors flex items-center gap-2 ${
+                        dark ? "hover:bg-gray-700" : "hover:bg-blue-50"
+                      }`}>
+                      <span>🚚</span> Track Order
                     </li>
-                    <li
-                      onClick={() => navigate("/payment-methods")}
-                      className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
-                    >
-                      Payment Methods
+                    <li onClick={() => navigate("/payment-methods")} className={`px-4 py-3 cursor-pointer transition-colors flex items-center gap-2 ${
+                        dark ? "hover:bg-gray-700" : "hover:bg-blue-50"
+                      }`}>
+                      <span>💳</span> Payment Methods
                     </li>
-                    <li
-                      onClick={() => navigate("/address")}
-                      className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
-                    >
-                      Update Address
+                    <li onClick={() => navigate("/address")} className={`px-4 py-3 cursor-pointer transition-colors flex items-center gap-2 ${
+                        dark ? "hover:bg-gray-700" : "hover:bg-blue-50"
+                      }`}>
+                      <span>📍</span> Update Address
                     </li>
-                    <li
-                      onClick={() => navigate("/admin-management")}
-                      className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
-                    >
-                      Admin Management
-                    </li>
-                    <li
-                      onClick={() => navigate("/admin-product-creation")}
-                      className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
-                    >
-                      Admin Control
-                    </li>
+
+                    <div className={`pt-2 mt-2 border-t ${dark ? "border-gray-700" : "border-gray-200"}`}>
+                      <li onClick={() => navigate("/admin-management")} className={`px-4 py-3 cursor-pointer transition-colors flex items-center gap-2 ${
+                          dark ? "hover:bg-gray-700" : "hover:bg-blue-50"
+                        }`}>
+                        <span>👨‍💼</span> Admin Management
+                      </li>
+                      <li onClick={() => navigate("/admin-product-creation")} className={`px-4 py-3 cursor-pointer transition-colors flex items-center gap-2 ${
+                          dark ? "hover:bg-gray-700" : "hover:bg-blue-50"
+                        }`}>
+                        <span>⚙️</span> Admin Control
+                      </li>
+                    </div>
+
                     {token && (
-                      <li
-                        onClick={handleLogout}
-                        className="px-4 py-2 hover:bg-red-200 dark:hover:bg-red-700 cursor-pointer text-red-500 font-semibold"
-                      >
-                        Logout
+                      <li onClick={handleLogout} className="px-4 py-3 cursor-pointer transition-colors flex items-center gap-2 mt-2 border-t border-red-200 hover:bg-red-50 text-red-600 font-semibold">
+                        <span>🚪</span> Logout
                       </li>
                     )}
                   </ul>
                 </div>
               </div>
             </div>
+
+            <button className={`md:hidden p-2 rounded-lg transition-all duration-300 ${
+                dark ? "hover:bg-gray-700" : "hover:bg-blue-400"
+              }`} onClick={() => setIsOpen(!isOpen)}>
+              {isOpen ? <CloseIcon fontSize="large" /> : <MenuIcon fontSize="large" />}
+            </button>
           </div>
-          <div
-            className="md:hidden cursor-pointer p-2"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {isOpen ? (
-              <CloseIcon fontSize="large" />
-            ) : (
-              <MenuIcon fontSize="large" />
-            )}
+
+          <div className="md:hidden mt-4">
+            <form onSubmit={handleSearch} className="relative">
+              <SearchIcon className="absolute top-3 left-4 text-gray-400" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search for Laptops, Brands..."
+                className={`border-2 py-3 pl-12 pr-4 rounded-full w-full transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-opacity-50 ${
+                  dark
+                    ? "bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-blue-400"
+                    : "bg-white border-white text-gray-800 placeholder-gray-500 focus:border-blue-300 focus:ring-blue-300"
+                }`}
+              />
+            </form>
           </div>
-        </div>
-        <div className="md:hidden mt-3">
-          <form onSubmit={handleSearch} className="relative">
-            <SearchIcon className="absolute top-2.5 left-3 text-gray-500" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search for Laptop, Brand and More.."
-              className={`border p-2 pl-10 pr-4 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                dark
-                  ? "bg-gray-800 border-gray-600 text-white placeholder-gray-400"
-                  : "bg-white border-gray-300 text-black placeholder-gray-500"
-              }`}
-            />
-          </form>
-        </div>
 
-        {/* Mobile Menu */}
-        {isOpen && (
-          <div className="md:hidden">
-            <ul
-              className={`mt-4 flex flex-col space-y-3 py-4 px-2 rounded-lg ${
-                dark ? "bg-gray-800" : "bg-blue-400"
-              }`}
-            >
-              <li
-                className="hover:text-gray-300 cursor-pointer p-2 rounded"
-                onClick={() => {
-                  navigate("/");
-                  setIsOpen(false);
-                }}
-              >
-                Home
-              </li>
-              <li
-                className="hover:text-gray-300 cursor-pointer p-2 rounded"
-                onClick={() => {
-                  navigate("/about");
-                  setIsOpen(false);
-                }}
-              >
-                About
-              </li>
-              <li
-                className="hover:text-gray-300 cursor-pointer p-2 rounded"
-                onClick={() => {
-                  navigate("/services");
-                  setIsOpen(false);
-                }}
-              >
-                Services
-              </li>
-              <li
-                className="hover:text-gray-300 cursor-pointer p-2 rounded"
-                onClick={() => {
-                  navigate("/contact");
-                  setIsOpen(false);
-                }}
-              >
-                Contact
-              </li>
+          {isOpen && (
+            <div className={`md:hidden fixed left-0 right-0 top-[140px] mx-4 rounded-xl shadow-2xl z-50 transition-all duration-300 overflow-hidden ${
+              dark ? "bg-gray-800 border border-gray-700" : "bg-white text-gray-800 border border-gray-200"
+            }`}>
+              <ul className="py-2">
+                <li className={`px-6 py-4 cursor-pointer transition-colors font-medium ${dark ? "hover:bg-gray-700" : "hover:bg-blue-50"}`}
+                  onClick={() => { navigate("/"); setIsOpen(false); }}>
+                  🏠 Home
+                </li>
+                <li className={`px-6 py-4 cursor-pointer transition-colors font-medium ${dark ? "hover:bg-gray-700" : "hover:bg-blue-50"}`}
+                  onClick={() => { navigate("/about"); setIsOpen(false); }}>
+                  ℹ️ About
+                </li>
+                <li className={`px-6 py-4 cursor-pointer transition-colors font-medium ${dark ? "hover:bg-gray-700" : "hover:bg-blue-50"}`}
+                  onClick={() => { navigate("/services"); setIsOpen(false); }}>
+                  🛠️ Services
+                </li>
+                <li className={`px-6 py-4 cursor-pointer transition-colors font-medium ${dark ? "hover:bg-gray-700" : "hover:bg-blue-50"}`}
+                  onClick={() => { navigate("/contact"); setIsOpen(false); }}>
+                  📞 Contact
+                </li>
 
-              {/* Mobile Icons Row */}
-              <li className="flex justify-around pt-4 border-t border-gray-500">
-                <button
-                  className="hover:text-gray-300 cursor-pointer p-2"
-                  onClick={() => {
-                    setdark(!dark);
-                    setIsOpen(false);
-                  }}
-                  aria-label="Toggle dark mode"
-                >
-                  {dark ? <LightModeIcon /> : <DarkModeIcon />}
-                </button>
+                <li className={`flex justify-around py-6 mt-2 border-t ${dark ? "border-gray-700" : "border-gray-200"}`}>
+                  <button className={`p-3 rounded-full transition-all ${dark ? "hover:bg-gray-700 bg-gray-900" : "hover:bg-blue-100 bg-blue-50"}`}
+                    onClick={() => { setdark(!dark); setIsOpen(false); }}>
+                    {dark ? <LightModeIcon className="text-yellow-300" /> : <DarkModeIcon className="text-gray-800" />}
+                  </button>
 
-                <button
-                  className="hover:text-gray-300 cursor-pointer p-2"
-                  onClick={() => {
-                    navigate("/cart");
-                    setIsOpen(false);
-                  }}
-                  aria-label="Shopping cart"
-                >
-                  <ShoppingCartIcon />
-                </button>
+                  <button className={`relative p-3 rounded-full transition-all ${dark ? "hover:bg-gray-700 bg-gray-900" : "hover:bg-blue-100 bg-blue-50"}`}
+                    onClick={() => { navigate("/cart"); setIsOpen(false); }}>
+                    <ShoppingCartIcon />
+                    {totalItems > 0 && (
+                      <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center font-bold">
+                        {totalItems}
+                      </span>
+                    )}
+                  </button>
 
-                <button
-                  className="hover:text-gray-300 cursor-pointer p-2"
-                  onClick={() => {
-                    navigate("/profile");
-                    setIsOpen(false);
-                  }}
-                  aria-label="User profile"
-                >
-                  <Person2Icon />
-                </button>
-              </li>
-            </ul>
-          </div>
-        )}
-      </nav>
-    </div>
+                  <button className={`p-3 rounded-full transition-all ${dark ? "hover:bg-gray-700 bg-gray-900" : "hover:bg-blue-100 bg-blue-50"}`}
+                    onClick={() => { navigate("/profile"); setIsOpen(false); }}>
+                    <Person2Icon />
+                  </button>
+                </li>
+              </ul>
+            </div>
+          )}
+        </nav>
+      </div>
+    </>
   );
 }
 
