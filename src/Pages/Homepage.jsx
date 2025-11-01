@@ -1,4 +1,8 @@
 import { useContext, useEffect, useState } from "react";
+import { Sparkles, Laptop } from "lucide-react";
+import { motion } from "framer-motion";
+import TopBrandsSection from "../Components/TopBrandsSection";
+import BannerText from "../Components/BannerText";
 import axios from "axios";
 import { darkmodeContext } from "../Context/DarkModeContext";
 import ProductCard from "../Components/ProductCard";
@@ -8,7 +12,6 @@ import { CardData, carddatatwo } from "../UsefulContents/CardDatas";
 import { useNavigate } from "react-router-dom";
 import FeaturesSection from "../Components/FeatureCard";
 import WhyChooseUs from "../Components/WhyChoose";
-import { Laptop } from "lucide-react";
 function HomePage() {
   const { dark } = useContext(darkmodeContext);
   const [trendingproducts, settrendingproducts] = useState([]);
@@ -121,156 +124,58 @@ function HomePage() {
   // console.log("activeTab", activeTab);
 
   return (
-    <div className="pt-[150px]">
-      <h1 className="text-center pb-10 font-bold text-3xl">
-        Latest Laptops | Up to 50% off | Shop now
-      </h1>
-      <div className="my-20">
-        <ProductSlider
-          products={trendingproducts}
-          onProductClick={handleNext}
-        />
-      </div>
-      <div className="my-20">
-        <FeatureProdSlider products={featuredata} />
-      </div>
-      <div className="container-box">
-        {/* <div className="bg-blue-100  text-black  px-4 md:px-8 lg:px-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8">
-            Top Brands
-          </h2>
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-4 md:gap-6">
-            <button
-              className={getTabClasses("all")}
-              onClick={() => handleTabClick("all")}
-            >
-              All
-            </button>
-            <button
-              className={getTabClasses("HP")}
-              onClick={() => handleTabClick("HP")}
-            >
-              HP
-            </button>
-            <button
-              className={getTabClasses("Lenovo")}
-              onClick={() => handleTabClick("Lenovo")}
-            >
-              Lenovo
-            </button>
-            <button
-              className={getTabClasses("Acer")}
-              onClick={() => handleTabClick("Acer")}
-            >
-              Acer
-            </button>
-            <button
-              className={getTabClasses("Apple")}
-              onClick={() => handleTabClick("Apple")}
-            >
-              Apple
-            </button>
-            <button
-              className={getTabClasses("Dell")}
-              onClick={() => handleTabClick("Dell")}
-            >
-              Dell
-            </button>
-          </div>
-        </div> */}
+    <div className="pt-[10rem]">
+      <div className=" container-box">
+        <div className="px-[15px] py-0">
+          <BannerText text={" Latest Laptops | Up to 50% Off | Shop Now"} />
+        </div>
+        <div className="my-20">
+          <ProductSlider
+            products={trendingproducts}
+            onProductClick={handleNext}
+          />
+        </div>
+        <div className="my-20">
+          <FeatureProdSlider products={featuredata} />
+        </div>
+        <div className="">
+         
+            <TopBrandsSection
+              brands={brands}
+              activeTab={activeTab}
+              handleTabClick={handleTabClick}
+            />
+      
 
-        <div className="my-12 container-box ">
-          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-10">
-            Select Top Brands
-          </h2>
-
-          <div className="flex flex-wrap justify-between items-center gap-6">
+          <div>
             <div
-              onClick={() => handleTabClick("all")}
-              className={`cursor-pointer flex flex-col items-center gap-2 h-[110px] w-[100px] rounded-lg border-2 transition-all duration-300 
-            ${
-              activeTab === "all"
-                ? "border-gray-800 bg-blue-300"
-                : "border-transparent hover:border-gray-800"
-            }`}
+              className={`${
+                dark ? "bg-black text-white" : "bg-[#f1f3f6] text-black"
+              } flex flex-wrap justify-between flex-col md:flex-row  items-center md:items-normal  gap-10 mt-20`}
             >
-              <div className="flex items-center justify-center w-full h-[60px]">
-                <img
-                  src="https://cdn.pixabay.com/photo/2013/07/12/19/05/notebook-154358_1280.png"
-                  className={`${
-                    activeTab === "all" ? "text-red-600" : "border-gray-800"
-                  } w-10 h-10`}
-                />
-              </div>
-              <p
-                className={`text-sm font-semibold ${
-                  activeTab === "all" ? "text-white" : "text-gray-700"
-                }`}
-              >
-                All
-              </p>
-            </div>
-
-            {brands.map((val, ind) => (
-              <div
-                key={ind}
-                onClick={() => handleTabClick(val.name)}
-                className={`cursor-pointer flex flex-col items-center gap-2 h-[110px] w-[100px] rounded-lg border-2 transition-all duration-300
-              ${
-                activeTab === val.name
-                  ? "border-gray-800 bg-blue-50"
-                  : "border-transparent hover:border-gray-600"
-              }`}
-              >
-                <div className="flex items-center justify-center w-full h-[60px]">
-                  <img
-                    src={val.logo}
-                    alt={val.name}
-                    className="max-w-[70px] max-h-[50px] object-contain"
+              {data && data.length > 0 ? (
+                data.map((product) => (
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    onProductClick={handleNext}
                   />
-                </div>
-                <p
-                  className={`text-sm font-semibold flex  ${
-                    activeTab === val.name
-                      ? "text-white bg-red-700 px-3 py-0.5 rounded-xl"
-                      : "text-gray-700"
-                  }`}
-                >
-                  {val.name}
-                </p>
-              </div>
-            ))}
+                ))
+              ) : (
+                <div className="min-h-screen  mx-auto">No products found</div>
+              )}
+            </div>
+            <button
+              className="float-right text-white cursor-pointer  mt-4 text-center py-2 px-4 rounded-lg bg-red-600 hover:bg-red-700 transition"
+              onClick={() => setlimit((prev) => prev + 8)}
+            >
+              {loading ? "Loading.." : "See More"}
+            </button>
           </div>
         </div>
-
-        <div>
-          <div
-            className={`${
-              dark ? "bg-black text-white" : "bg-[#f1f3f6] text-black"
-            } flex flex-wrap justify-between flex-col md:flex-row  items-center md:items-normal  gap-10 mt-20`}
-          >
-            {data && data.length > 0 ? (
-              data.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  onProductClick={handleNext}
-                />
-              ))
-            ) : (
-              <div className="min-h-screen  mx-auto">No products found</div>
-            )}
-          </div>
-          <button
-            className="float-right text-white cursor-pointer  mt-4 text-center py-2 px-4 rounded-lg bg-red-600 hover:bg-red-700 transition"
-            onClick={() => setlimit((prev) => prev + 8)}
-          >
-            {loading ? "Loading.." : "See More"}
-          </button>
+        <div className="mt-20">
+          <WhyChooseUs />
         </div>
-      </div>
-      <div className="mt-20">
-        <WhyChooseUs />
       </div>
     </div>
   );
