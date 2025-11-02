@@ -27,7 +27,7 @@ function Services() {
         </div>
 
         {/* Card 2 */}
-        <div className="flex-1 bg-white shadow-md rounded-lg p-8 text-center hover:shadow-xl transition">
+        <div className="flex-1 bg-white shadow-md rounded-lg p-8 text-center hovers:shadow-xl transition">
           <div className="text-green-600 text-5xl mb-4">📱</div>
           <h3 className="text-xl font-semibold mb-3">Mobile Apps</h3>
           <p className="text-gray-600">

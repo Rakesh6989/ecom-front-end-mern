@@ -1,5 +1,4 @@
-// Footer.js
-import React from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -30,9 +29,14 @@ const Footer = () => {
             <h3 className="text-white text-xl font-bold mb-4">Help</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  FAQs
-                </a>
+                <li>
+                  <Link
+                    to="/faq"
+                    className="hover:text-white transition-colors"
+                  >
+                    FAQ's
+                  </Link>
+                </li>
               </li>
               <li>
                 <a href="#" className="hover:text-white transition-colors">
@@ -50,9 +54,12 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition-colors">
+                <Link
+                  to="/warranty-info"
+                  className="hover:text-white transition-colors"
+                >
                   Warranty Info
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -62,9 +69,12 @@ const Footer = () => {
             <h3 className="text-white text-xl font-bold mb-4">Policies</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="#" className="hover:text-white transition-colors">
+                <Link
+                  to="/return-policy"
+                  className="hover:text-white transition-colors"
+                >
                   Return Policy
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="#" className="hover:text-white transition-colors">
@@ -72,19 +82,28 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Sitemap
-                </a>
+                <Link
+                  to="/sitemap"
+                  className="hover:text-white transition-colors"
+                >
+                  SiteMap
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition-colors">
+                <Link
+                  to="/privacy-policy"
+                  className="hover:text-white transition-colors"
+                >
                   Privacy Policy
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Terms & Conditions
-                </a>
+                <Link
+                  to="/term-and-conditions"
+                  className="hover:text-white transition-colors"
+                >
+                  Term and Conditions
+                </Link>
               </li>
             </ul>
           </div>
@@ -94,19 +113,28 @@ const Footer = () => {
             <h3 className="text-white text-xl font-bold mb-4">Company</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  About Us
-                </a>
+                <Link
+                  to="/about-us"
+                  className="hover:text-white transition-colors"
+                >
+                 About Us
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Contact Us
-                </a>
+                <Link
+                  to="/contact-us"
+                  className="hover:text-white transition-colors"
+                >
+                 Contact Us
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Service Centres
-                </a>
+                <Link
+                  to="/service-centers"
+                  className="hover:text-white transition-colors"
+                >
+                Service Centers
+                </Link>
               </li>
               <li>
                 <a href="#" className="hover:text-white transition-colors">
