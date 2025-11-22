@@ -48,6 +48,7 @@ function App() {
         <Route path="/term-and-conditions" element={<LaptopiyaTermsAndConditions />} />
         <Route path="/term-and-conditions" element={<LaptopiyaTermsAndConditions />} />
         <Route path="/service-centers" element={<ServiceCenters />} />
+        <Route path="/sitemap" element={<LaptopiyaSitemap />} />
         <Route
           path="/admin-product-creation"
           element={
